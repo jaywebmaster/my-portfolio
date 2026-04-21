@@ -540,7 +540,7 @@ export default function PortfolioV3() {
       <nav className={scrollY > 20 ? "stuck" : ""}>
         <div className="nav-wrap">
           <div className="logo">
-            <span>~/yourname</span>
+            <span>~Jay</span>
             <span className="logo-cursor" />
           </div>
           <div className="nav-center">
@@ -551,9 +551,9 @@ export default function PortfolioV3() {
           <div className="nav-right">
             <div className="nav-status">
               <div className="status-dot" />
-              available for work
+              Available for work
             </div>
-            <button className="nav-hire" onClick={() => scrollTo("contact")}>hire me</button>
+            <button className="nav-hire" onClick={() => scrollTo("contact")}>Hire me!</button>
           </div>
           <button className={`ham ${menuOpen ? "open" : ""}`} onClick={() => setMenuOpen(!menuOpen)}>
             <span /><span /><span />
@@ -582,7 +582,7 @@ export default function PortfolioV3() {
           </h1>
 
           <p className="hero-desc">
-            Senior web developer specializing in <strong>custom code, WordPress, and AI integrations</strong>. I don't use templates — I craft fast, scalable, and intelligent digital products that actually work.
+            Web developer specializing in <strong>custom code, WordPress, and AI integrations</strong>. I don't use templates — I craft fast, scalable, and intelligent digital products that actually work.
           </p>
 
           <div className="hero-row">
