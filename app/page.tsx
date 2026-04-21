@@ -576,9 +576,9 @@ export default function PortfolioV3() {
           </div>
 
           <h1 className="hero-h1">
-            <span className="h1-line"><span>I Love</span></span>
-            <span className="h1-line"><span>You</span></span>
-            <span className="h1-line"><span>Star, say yes sa dc if want mo na me bumalik.</span></span>
+            <span className="h1-line"><span>I build</span></span>
+            <span className="h1-line"><span>the web.</span></span>
+            <span className="h1-line"><span>with intent.</span></span>
           </h1>
 
           <p className="hero-desc">
