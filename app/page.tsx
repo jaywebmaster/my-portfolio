@@ -1,159 +1,120 @@
 "use client";
-import { useState, useEffect, useRef, useCallback } from "react";
-
-const NAV = ["About", "Skills", "Projects", "Contact"];
+import { useState, useEffect, useRef } from "react";
 
 const SKILLS = [
-  { label: "HTML & CSS", pct: 100 },
-  { label: "Page Builders", pct: 95, sub: "Elementor, Divi, Beaver, Guten" },
-  { label: "PHP", pct: 90 },
-  { label: "JavaScript", pct: 90 },
-  { label: "Git & GitHub", pct: 85 },
-  { label: "REST APIs", pct: 75 },
-  { label: "React", pct: 70 },
-  { label: "Next.js", pct: 70 },
+  { cat: "Frontend", items: ["HTML5", "CSS3", "JavaScript ES6+", "TypeScript", "React", "Next.js", "Tailwind CSS", "GSAP"] },
+  { cat: "Backend", items: ["PHP 8", "MySQL", "REST APIs", "Node.js", "WordPress Core", "WooCommerce", "Custom Plugins"] },
+  { cat: "Page Builders", items: ["Elementor Pro", "Divi Builder", "Beaver Builder", "Gutenberg", "Oxygen Builder", "Bricks Builder"] },
+  { cat: "AI & Tools", items: ["ChatGPT API", "Claude API", "GitHub Copilot", "Midjourney", "Vercel AI SDK", "Cursor IDE"] },
+];
+
+const STACK_ICONS = [
+  { name: "HTML5", color: "#e34f26" },
+  { name: "CSS3", color: "#1572b6" },
+  { name: "JS", color: "#f7df1e" },
+  { name: "PHP", color: "#777bb4" },
+  { name: "React", color: "#61dafb" },
+  { name: "Next", color: "#ffffff" },
+  { name: "WP", color: "#21759b" },
+  { name: "Node", color: "#68a063" },
+  { name: "MySQL", color: "#4479a1" },
+  { name: "GPT", color: "#10a37f" },
+  { name: "Git", color: "#f05032" },
+  { name: "TS", color: "#3178c6" },
 ];
 
 const PROJECTS = [
-  {
-    title: "Enterprise CMS Platform",
-    desc: "A scalable content management system built with PHP and custom WordPress architecture, serving 500k+ monthly visitors.",
-    tags: ["PHP", "WordPress", "MySQL", "REST API"],
-    year: "2024",
-    link: "#",
-  },
-  {
-    title: "E-Commerce Storefront",
-    desc: "High-converting WooCommerce store with custom Elementor theme, optimized for Core Web Vitals and mobile-first UX.",
-    tags: ["Elementor", "WooCommerce", "PHP", "CSS"],
-    year: "2023",
-    link: "#",
-  },
-  {
-    title: "React SaaS Dashboard",
-    desc: "Full-featured analytics dashboard with real-time data, dynamic charts, and a clean Next.js + REST API backend.",
-    tags: ["Next.js", "React", "API", "TypeScript"],
-    year: "2023",
-    link: "#",
-  },
-  {
-    title: "Portfolio System",
-    desc: "Headless WordPress with Next.js frontend. Lightning-fast, SEO-optimized, and fully dynamic via WP REST API.",
-    tags: ["Next.js", "WordPress", "REST API", "PHP"],
-    year: "2022",
-    link: "#",
-  },
+  { title: "AI-Powered CMS", desc: "Custom WordPress CMS with integrated ChatGPT API for auto-content generation and SEO optimization. Serving 500k+ monthly visitors.", tags: ["PHP", "WordPress", "ChatGPT API", "MySQL"], color: "#10a37f" },
+  { title: "E-Commerce Platform", desc: "WooCommerce store with custom Elementor theme and AI product recommendations engine. 3x conversion rate improvement.", tags: ["Elementor", "WooCommerce", "PHP", "AI"], color: "#6c63ff" },
+  { title: "SaaS Dashboard", desc: "Full-featured Next.js analytics dashboard with real-time data, Vercel AI SDK integration, and custom REST API.", tags: ["Next.js", "React", "Vercel AI", "API"], color: "#00d4ff" },
+  { title: "Custom Plugin Suite", desc: "Suite of 12 custom WordPress plugins replacing $2,000/yr in subscriptions. Clean PHP 8 OOP architecture.", tags: ["PHP 8", "WordPress", "OOP", "MySQL"], color: "#ff6b35" },
+  { title: "Headless Blog Engine", desc: "Headless WordPress with Next.js frontend, ISR caching, and Claude API for intelligent content tagging.", tags: ["Next.js", "WordPress", "Claude API", "ISR"], color: "#f59e0b" },
+  { title: "Page Builder Theme", desc: "Commercial Oxygen Builder theme sold on ThemeForest with 800+ sales. Fully responsive, WCAG 2.1 compliant.", tags: ["Oxygen", "CSS", "PHP", "JS"], color: "#ec4899" },
 ];
 
-export default function Portfolio() {
-  const [active, setActive] = useState("");
+const SERVICES = [
+  { icon: "⬡", title: "Custom WordPress Dev", desc: "Bespoke themes, plugins, and full WordPress ecosystems built from scratch — no bloat, no shortcuts." },
+  { icon: "◈", title: "Page Builder Mastery", desc: "Elementor, Divi, Beaver, Gutenberg, Oxygen — pixel-perfect builds at speed without sacrificing performance." },
+  { icon: "◎", title: "AI Integration", desc: "Embedding ChatGPT, Claude, and other AI APIs directly into your web products for intelligent, dynamic experiences." },
+  { icon: "⬟", title: "Full-Stack Development", desc: "End-to-end web apps: PHP/MySQL backends, React/Next.js frontends, REST APIs, and everything in between." },
+];
+
+export default function PortfolioV3() {
+  const [scrollY, setScrollY] = useState(0);
+  const [activeSection, setActiveSection] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
+  const [skillTab, setSkillTab] = useState(0);
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
-  const [scrollY, setScrollY] = useState(0);
-  const [skillsVisible, setSkillsVisible] = useState(false);
-  const [cursorPos, setCursorPos] = useState({ x: -200, y: -200 });
-  const skillsRef = useRef<HTMLDivElement>(null);
-  const heroRef = useRef<HTMLElement>(null);
+  const [hoveredProj, setHoveredProj] = useState<number | null>(null);
+  const [mouse, setMouse] = useState({ x: 0, y: 0 });
+  const [loaded, setLoaded] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const heroRef = useRef<HTMLElement>(null);
 
-  // Particle canvas
+  useEffect(() => {
+    setLoaded(true);
+    const t = setTimeout(() => setLoaded(true), 100);
+    return () => clearTimeout(t);
+  }, []);
+
+  // Scroll tracking
+  useEffect(() => {
+    const fn = () => {
+      setScrollY(window.scrollY);
+      const ids = ["about","skills","projects","contact"];
+      for (let i = ids.length - 1; i >= 0; i--) {
+        const el = document.getElementById(ids[i]);
+        if (el && el.getBoundingClientRect().top <= 160) { setActiveSection(ids[i]); return; }
+      }
+      setActiveSection("");
+    };
+    window.addEventListener("scroll", fn, { passive: true });
+    return () => window.removeEventListener("scroll", fn);
+  }, []);
+
+  // Mouse
+  useEffect(() => {
+    const fn = (e: MouseEvent) => setMouse({ x: e.clientX, y: e.clientY });
+    window.addEventListener("mousemove", fn);
+    return () => window.removeEventListener("mousemove", fn);
+  }, []);
+
+  // Canvas grid
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    let animId: number;
+    let raf: number;
+    let t = 0;
 
-    const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
+    const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
     resize();
     window.addEventListener("resize", resize);
 
-    const particles: { x: number; y: number; vx: number; vy: number; size: number; alpha: number; pulse: number }[] = [];
-    for (let i = 0; i < 60; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.3,
-        vy: (Math.random() - 0.5) * 0.3,
-        size: Math.random() * 1.5 + 0.3,
-        alpha: Math.random() * 0.4 + 0.1,
-        pulse: Math.random() * Math.PI * 2,
-      });
-    }
-
     const draw = () => {
+      t += 0.004;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach((p) => {
-        p.x += p.vx;
-        p.y += p.vy;
-        p.pulse += 0.01;
-        if (p.x < 0) p.x = canvas.width;
-        if (p.x > canvas.width) p.x = 0;
-        if (p.y < 0) p.y = canvas.height;
-        if (p.y > canvas.height) p.y = 0;
-        const a = p.alpha * (0.7 + 0.3 * Math.sin(p.pulse));
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(0,194,255,${a})`;
-        ctx.fill();
-      });
-      // draw connections
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 120) {
-            ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(0,194,255,${0.06 * (1 - dist / 120)})`;
-            ctx.lineWidth = 0.5;
-            ctx.stroke();
-          }
+      const cols = Math.ceil(canvas.width / 60) + 1;
+      const rows = Math.ceil(canvas.height / 60) + 1;
+      for (let x = 0; x < cols; x++) {
+        for (let y = 0; y < rows; y++) {
+          const wave = Math.sin(x * 0.4 + t) * Math.cos(y * 0.4 + t) * 0.5 + 0.5;
+          ctx.beginPath();
+          ctx.arc(x * 60, y * 60, 1, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(100,200,120,${wave * 0.12})`;
+          ctx.fill();
         }
       }
-      animId = requestAnimationFrame(draw);
+      raf = requestAnimationFrame(draw);
     };
     draw();
-    return () => { cancelAnimationFrame(animId); window.removeEventListener("resize", resize); };
-  }, []);
-
-  // Cursor glow
-  useEffect(() => {
-    const move = (e: MouseEvent) => setCursorPos({ x: e.clientX, y: e.clientY });
-    window.addEventListener("mousemove", move);
-    return () => window.removeEventListener("mousemove", move);
-  }, []);
-
-  // Scroll
-  useEffect(() => {
-    const onScroll = () => {
-      setScrollY(window.scrollY);
-      const sections = NAV.map((n) => document.getElementById(n.toLowerCase()));
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const s = sections[i];
-        if (s && s.getBoundingClientRect().top <= 130) { setActive(NAV[i]); return; }
-      }
-      setActive("");
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  // Skills reveal
-  useEffect(() => {
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setSkillsVisible(true); }, { threshold: 0.15 });
-    if (skillsRef.current) obs.observe(skillsRef.current);
-    return () => obs.disconnect();
+    return () => { cancelAnimationFrame(raf); window.removeEventListener("resize", resize); };
   }, []);
 
   const scrollTo = (id: string) => {
-    document.getElementById(id.toLowerCase())?.scrollIntoView({ behavior: "smooth" });
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
     setMenuOpen(false);
   };
 
@@ -163,645 +124,624 @@ export default function Portfolio() {
     setTimeout(() => { setSending(false); setSent(true); }, 1800);
   };
 
-  const navOpacity = Math.min(scrollY / 80, 1);
-
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Cabinet+Grotesk:wght@300;400;500;700&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Syne:wght@400;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&family=Fira+Code:wght@300;400;500&display=swap');
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
-          --bg: #05070f;
-          --bg2: #080c17;
-          --card: #0c1120;
-          --card2: #0f1526;
-          --border: rgba(255,255,255,0.06);
-          --border-h: rgba(0,194,255,0.25);
-          --accent: #00c2ff;
-          --accent2: #6c3de8;
-          --accent3: #00ffb3;
-          --text: #dce8f5;
-          --muted: #5a6a80;
-          --muted2: #8899aa;
+          --bg: #04080f;
+          --bg1: #060d16;
+          --bg2: #081018;
+          --surface: #0c1520;
+          --surface2: #101c2a;
+          --green: #4ade80;
+          --green2: #22c55e;
+          --green3: #16a34a;
+          --teal: #2dd4bf;
+          --blue: #38bdf8;
+          --border: rgba(74,222,128,0.08);
+          --border2: rgba(74,222,128,0.2);
+          --text: #e2f0e8;
+          --muted: #4d7060;
+          --muted2: #7a9e88;
+          --mono: 'Fira Code', monospace;
+          --sans: 'Plus Jakarta Sans', sans-serif;
+          --glow: 0 0 40px rgba(74,222,128,0.15);
         }
 
         html { scroll-behavior: smooth; }
         body {
           background: var(--bg);
           color: var(--text);
-          font-family: 'Space Grotesk', sans-serif;
+          font-family: var(--sans);
           font-weight: 300;
           line-height: 1.7;
           overflow-x: hidden;
-          cursor: none;
         }
 
-        /* Custom cursor */
-        #cursor {
+        /* CURSOR */
+        #c-ring {
           position: fixed; pointer-events: none; z-index: 9999;
-          width: 400px; height: 400px;
-          border-radius: 50%;
-          background: radial-gradient(circle, rgba(0,194,255,0.04) 0%, transparent 70%);
-          transform: translate(-50%, -50%);
-          transition: transform 0.05s linear;
+          width: 32px; height: 32px; border-radius: 50%;
+          border: 1px solid rgba(74,222,128,0.5);
+          transform: translate(-50%,-50%);
+          transition: left .12s ease, top .12s ease, width .2s, height .2s, border-color .2s;
+          mix-blend-mode: screen;
         }
-        #cursor-dot {
+        #c-dot {
           position: fixed; pointer-events: none; z-index: 9999;
-          width: 6px; height: 6px; border-radius: 50%;
-          background: var(--accent);
-          transform: translate(-50%, -50%);
-          box-shadow: 0 0 10px var(--accent);
-          transition: width .2s, height .2s;
+          width: 4px; height: 4px; border-radius: 50%;
+          background: var(--green); transform: translate(-50%,-50%);
+          box-shadow: 0 0 8px var(--green);
         }
+
+        /* CANVAS */
+        #grid-canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
 
         /* NAV */
         nav {
           position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-          display: flex; align-items: center; justify-content: space-between;
-          padding: 0 3rem; height: 68px;
-          transition: background .3s, border-color .3s;
+          transition: all .4s;
         }
-        nav.scrolled {
-          background: rgba(5,7,15,0.92);
-          backdrop-filter: blur(20px);
+        nav.stuck {
+          background: rgba(4,8,15,0.92);
+          backdrop-filter: blur(24px);
           border-bottom: 1px solid var(--border);
         }
-        .nav-logo {
-          font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.15rem;
-          letter-spacing: -0.02em; color: var(--text);
-          display: flex; align-items: center; gap: 10px;
+        .nav-wrap {
+          max-width: 1280px; margin: 0 auto;
+          display: flex; align-items: center; justify-content: space-between;
+          padding: 0 2.5rem; height: 72px;
         }
-        .nav-logo-dot {
-          width: 8px; height: 8px; border-radius: 50%; background: var(--accent);
-          box-shadow: 0 0 12px var(--accent);
-          animation: pulse-dot 2s ease-in-out infinite;
+        .logo {
+          font-family: var(--mono); font-size: .85rem; font-weight: 400;
+          color: var(--green); letter-spacing: .04em;
+          display: flex; align-items: center; gap: 6px;
         }
-        @keyframes pulse-dot { 0%,100%{box-shadow:0 0 8px var(--accent)} 50%{box-shadow:0 0 18px var(--accent), 0 0 32px rgba(0,194,255,0.4)} }
+        .logo-cursor { display: inline-block; width: 8px; height: 16px; background: var(--green); margin-left: 2px; animation: cursor-blink 1.1s step-end infinite; }
+        @keyframes cursor-blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
-        .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
-        .nav-links button {
-          background: none; border: none; cursor: none;
-          font-family: 'Space Grotesk', sans-serif; font-size: .8rem; font-weight: 400;
-          color: var(--muted); letter-spacing: .08em; text-transform: uppercase;
-          transition: color .2s; padding: 6px 0; position: relative;
+        .nav-center { display: flex; align-items: center; gap: .25rem; }
+        .nav-pill {
+          padding: 6px 16px; border-radius: 999px; font-size: .72rem;
+          font-family: var(--mono); letter-spacing: .08em; cursor: pointer;
+          background: none; border: none; color: var(--muted2);
+          transition: color .2s, background .2s;
         }
-        .nav-links button::after {
-          content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
-          background: var(--accent); transform: scaleX(0); transform-origin: left;
-          transition: transform .3s cubic-bezier(.4,0,.2,1);
-        }
-        .nav-links button:hover, .nav-links button.active { color: var(--text); }
-        .nav-links button.active::after, .nav-links button:hover::after { transform: scaleX(1); }
+        .nav-pill:hover, .nav-pill.on { color: var(--green); background: rgba(74,222,128,0.08); }
 
-        .nav-cta {
-          padding: 8px 20px; border-radius: 6px; font-size: .8rem; font-weight: 500;
-          background: rgba(0,194,255,0.08); color: var(--accent);
-          border: 1px solid rgba(0,194,255,0.2); cursor: none;
-          font-family: 'Space Grotesk', sans-serif; letter-spacing: .06em;
-          transition: background .2s, border-color .2s, box-shadow .2s;
-          text-transform: uppercase;
+        .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .nav-status {
+          display: flex; align-items: center; gap: 6px;
+          font-family: var(--mono); font-size: .65rem; color: var(--muted2); letter-spacing: .08em;
         }
-        .nav-cta:hover { background: rgba(0,194,255,0.15); border-color: rgba(0,194,255,0.4); box-shadow: 0 0 20px rgba(0,194,255,0.15); }
+        .status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px var(--green); animation: pulse-g 2s ease-in-out infinite; }
+        @keyframes pulse-g { 0%,100%{box-shadow:0 0 6px var(--green)} 50%{box-shadow:0 0 16px var(--green),0 0 28px rgba(74,222,128,0.3)} }
 
-        .hamburger { display: none; background: none; border: none; cursor: none; padding: 8px; }
-        .hamburger span { display: block; width: 22px; height: 1.5px; background: var(--text); margin: 6px 0; transition: all .25s; }
-        .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
-        .hamburger.open span:nth-child(2) { opacity: 0; }
-        .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+        .nav-hire {
+          padding: 8px 20px; border-radius: 6px; font-size: .75rem;
+          font-family: var(--mono); font-weight: 500; letter-spacing: .08em;
+          background: rgba(74,222,128,0.1); color: var(--green);
+          border: 1px solid var(--border2); cursor: pointer;
+          transition: all .2s;
+        }
+        .nav-hire:hover { background: rgba(74,222,128,0.18); box-shadow: var(--glow); }
 
-        .mobile-menu {
-          display: none; position: fixed; inset: 0; z-index: 190;
-          background: rgba(5,7,15,0.98); backdrop-filter: blur(20px);
-          flex-direction: column; align-items: center; justify-content: center; gap: 2rem;
-          opacity: 0; pointer-events: none; transition: opacity .3s;
-        }
-        .mobile-menu.open { display: flex; opacity: 1; pointer-events: all; }
-        .mobile-menu button {
-          background: none; border: none; cursor: none;
-          font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 700;
-          color: var(--muted); transition: color .2s;
-        }
-        .mobile-menu button:hover { color: var(--text); }
+        .ham { display: none; background: none; border: none; cursor: pointer; padding: 6px; }
+        .ham span { display: block; width: 20px; height: 1px; background: var(--text); margin: 5px 0; transition: all .2s; }
+        .ham.open span:nth-child(1) { transform: rotate(45deg) translate(4px,4px); }
+        .ham.open span:nth-child(2) { opacity: 0; }
+        .ham.open span:nth-child(3) { transform: rotate(-45deg) translate(4px,-4px); }
+        .mob { display: none; position: fixed; inset: 0; z-index: 190; background: rgba(4,8,15,.98); backdrop-filter: blur(24px); flex-direction: column; align-items: center; justify-content: center; gap: 2rem; }
+        .mob.open { display: flex; }
+        .mob button { background: none; border: none; cursor: pointer; font-family: var(--sans); font-size: 1.8rem; font-weight: 700; color: var(--muted2); transition: color .2s; }
+        .mob button:hover { color: var(--green); }
 
-        @media (max-width: 768px) {
-          nav { padding: 0 1.5rem; }
-          .nav-links, .nav-cta { display: none; }
-          .hamburger { display: block; }
-        }
+        @media(max-width:768px) { .nav-center, .nav-status { display: none; } .ham { display: block; } .nav-wrap { padding: 0 1.5rem; } }
 
         /* HERO */
         .hero {
-          min-height: 100vh; display: flex; align-items: center; justify-content: center;
-          padding: 120px 3rem 6rem; text-align: left; position: relative; overflow: hidden;
+          min-height: 100vh;
+          display: flex; flex-direction: column; justify-content: center;
+          padding: 120px 2.5rem 6rem;
+          max-width: 1280px; margin: 0 auto;
+          position: relative; z-index: 2;
         }
-        canvas#particles { position: absolute; inset: 0; z-index: 0; }
-
-        .hero-grid-lines {
-          position: absolute; inset: 0; z-index: 0; pointer-events: none;
-          background-image:
-            linear-gradient(rgba(0,194,255,0.025) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(0,194,255,0.025) 1px, transparent 1px);
-          background-size: 60px 60px;
-          mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent);
-        }
-
-        .hero-inner { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; width: 100%; }
 
         .hero-eyebrow {
-          display: inline-flex; align-items: center; gap: 10px;
-          margin-bottom: 2rem; opacity: 0;
-          animation: fadeUp .8s .2s forwards;
+          display: flex; align-items: center; gap: .75rem; margin-bottom: 2.5rem;
+          font-family: var(--mono); font-size: .7rem; color: var(--green); letter-spacing: .14em;
+          opacity: 0; animation: up .6s .2s forwards;
         }
-        .hero-eyebrow-line { width: 32px; height: 1px; background: var(--accent); }
-        .hero-eyebrow-text {
-          font-size: .72rem; letter-spacing: .2em; text-transform: uppercase;
-          color: var(--accent); font-weight: 500;
+        .eyebrow-tag {
+          background: rgba(74,222,128,0.1); border: 1px solid var(--border2);
+          padding: 4px 12px; border-radius: 999px;
         }
+        .eyebrow-slash { color: var(--muted); }
 
-        .hero-headline {
-          font-family: 'Syne', sans-serif; font-weight: 800;
-          font-size: clamp(3rem, 8vw, 6.5rem); line-height: 0.95;
-          letter-spacing: -0.04em; margin-bottom: 2rem;
-          opacity: 0; animation: fadeUp .9s .35s forwards;
+        .hero-h1 {
+          font-weight: 800; line-height: .92; letter-spacing: -.04em;
+          font-size: clamp(3.5rem, 9vw, 7.5rem);
+          margin-bottom: 2rem;
         }
-        .hero-headline .line { display: block; overflow: hidden; }
-        .hero-headline .line span { display: block; animation: slideUp .9s cubic-bezier(.16,1,.3,1) forwards; opacity: 0; }
-        .hero-headline .line:nth-child(1) span { animation-delay: .3s; }
-        .hero-headline .line:nth-child(2) span { animation-delay: .45s; }
-        .hero-headline .line:nth-child(3) span { animation-delay: .6s; }
-
-        @keyframes slideUp { from{transform:translateY(100%);opacity:0} to{transform:translateY(0);opacity:1} }
-
-        .gradient-text {
-          background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 50%, var(--accent3) 100%);
-          -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-          background-clip: text;
-        }
+        .h1-line { overflow: hidden; display: block; }
+        .h1-line span { display: block; opacity: 0; transform: translateY(100%); animation: lineUp .9s cubic-bezier(.16,1,.3,1) forwards; }
+        .h1-line:nth-child(1) span { animation-delay: .3s; }
+        .h1-line:nth-child(2) span { animation-delay: .45s; color: var(--green); }
+        .h1-line:nth-child(3) span { animation-delay: .6s; color: var(--muted2); font-weight: 200; }
+        @keyframes lineUp { to { opacity: 1; transform: none; } }
 
         .hero-desc {
-          max-width: 520px; font-size: 1.05rem; color: var(--muted2); line-height: 1.75;
-          margin-bottom: 3rem; font-weight: 300;
-          opacity: 0; animation: fadeUp .8s .75s forwards;
+          max-width: 600px; font-size: 1.05rem; color: var(--muted2); line-height: 1.8; font-weight: 300;
+          margin-bottom: 3rem; opacity: 0; animation: up .7s .8s forwards;
+        }
+        .hero-desc strong { color: var(--text); font-weight: 500; }
+
+        .hero-row {
+          display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;
+          opacity: 0; animation: up .7s 1s forwards;
         }
 
-        .hero-actions {
-          display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
-          opacity: 0; animation: fadeUp .8s .9s forwards;
-        }
-        .btn-glow {
-          position: relative; overflow: hidden;
-          padding: 14px 32px; border-radius: 8px; font-size: .9rem; font-weight: 500;
-          background: var(--accent); color: #05070f;
-          border: none; cursor: none; font-family: 'Space Grotesk', sans-serif;
-          letter-spacing: .04em;
-          box-shadow: 0 0 30px rgba(0,194,255,0.3), 0 0 60px rgba(0,194,255,0.1);
+        .btn-code {
+          display: flex; align-items: center; gap: 10px;
+          padding: 14px 30px; border-radius: 8px;
+          background: var(--green); color: var(--bg); font-family: var(--mono);
+          font-size: .8rem; font-weight: 500; letter-spacing: .06em;
+          border: none; cursor: pointer; position: relative; overflow: hidden;
           transition: box-shadow .3s, transform .15s;
+          box-shadow: 0 0 30px rgba(74,222,128,0.25);
         }
-        .btn-glow::before {
+        .btn-code::before {
           content: ''; position: absolute; inset: 0;
-          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+          background: linear-gradient(90deg,transparent,rgba(255,255,255,0.15),transparent);
           transform: translateX(-100%); transition: transform .5s;
         }
-        .btn-glow:hover { box-shadow: 0 0 50px rgba(0,194,255,0.5), 0 0 80px rgba(0,194,255,0.2); transform: translateY(-2px); }
-        .btn-glow:hover::before { transform: translateX(100%); }
+        .btn-code:hover { box-shadow: 0 0 50px rgba(74,222,128,0.45); transform: translateY(-2px); }
+        .btn-code:hover::before { transform: translateX(100%); }
 
-        .btn-ghost {
-          padding: 13px 32px; border-radius: 8px; font-size: .9rem; font-weight: 400;
+        .btn-outline-g {
+          padding: 13px 30px; border-radius: 8px;
           background: transparent; color: var(--text);
-          border: 1px solid var(--border); cursor: none;
-          font-family: 'Space Grotesk', sans-serif; letter-spacing: .04em;
-          transition: border-color .25s, color .25s, transform .15s;
+          border: 1px solid rgba(255,255,255,0.1); font-family: var(--mono);
+          font-size: .8rem; letter-spacing: .06em; cursor: pointer;
+          transition: border-color .2s, color .2s, transform .15s;
         }
-        .btn-ghost:hover { border-color: var(--border-h); color: var(--accent); transform: translateY(-2px); }
+        .btn-outline-g:hover { border-color: var(--border2); color: var(--green); transform: translateY(-2px); }
 
-        .hero-scroll-hint {
-          position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
-          display: flex; flex-direction: column; align-items: center; gap: 8px; z-index: 1;
-          opacity: 0; animation: fadeUp .8s 1.2s forwards;
+        .hero-stack-row {
+          display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+          opacity: 0; animation: up .7s 1.1s forwards;
+          margin-top: 3rem;
         }
-        .hero-scroll-hint span { font-size: .65rem; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
-        .scroll-line { width: 1px; height: 48px; background: linear-gradient(to bottom, var(--accent), transparent); animation: scrollLine 2s ease-in-out infinite; }
-        @keyframes scrollLine { 0%{transform:scaleY(0);transform-origin:top} 50%{transform:scaleY(1);transform-origin:top} 51%{transform-origin:bottom} 100%{transform:scaleY(0);transform-origin:bottom} }
-
-        .hero-stats {
-          position: absolute; right: 3rem; top: 50%; transform: translateY(-50%);
-          display: flex; flex-direction: column; gap: 2rem; z-index: 1;
-          opacity: 0; animation: fadeRight .8s 1s forwards;
-        }
-        @keyframes fadeRight { from{opacity:0;transform:translateY(-50%) translateX(30px)} to{opacity:1;transform:translateY(-50%) translateX(0)} }
-        .hero-stat { text-align: right; }
-        .hero-stat-num { font-family: 'Syne', sans-serif; font-size: 2.5rem; font-weight: 800; line-height: 1; color: var(--text); }
-        .hero-stat-num sup { font-size: 1rem; color: var(--accent); }
-        .hero-stat-label { font-size: .65rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
-
-        @media (max-width: 900px) { .hero-stats { display: none; } .hero { text-align: center; } .hero-desc { margin: 0 auto 3rem; } .hero-actions { justify-content: center; } .hero-eyebrow { justify-content: center; } }
-
-        @keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
-
-        /* SECTION SHARED */
-        .section-inner { max-width: 1100px; margin: 0 auto; padding: 7rem 3rem; }
-        @media (max-width: 640px) { .section-inner { padding: 5rem 1.5rem; } }
-
-        .section-header { margin-bottom: 4rem; }
-        .section-eyebrow {
-          display: inline-flex; align-items: center; gap: 10px; margin-bottom: 1rem;
-        }
-        .section-eyebrow-line { width: 24px; height: 1px; background: var(--accent); }
-        .section-eyebrow-text { font-size: .68rem; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); font-weight: 500; }
-
-        h2 {
-          font-family: 'Syne', sans-serif; font-weight: 800;
-          font-size: clamp(2.4rem, 5vw, 3.8rem); letter-spacing: -0.03em; line-height: 1.0;
-          color: var(--text);
-        }
-
-        /* ABOUT */
-        #about { position: relative; overflow: hidden; }
-        #about::before {
-          content: ''; position: absolute; left: -200px; top: 50%; transform: translateY(-50%);
-          width: 500px; height: 500px; border-radius: 50%;
-          background: radial-gradient(circle, rgba(108,61,232,0.06) 0%, transparent 70%);
-          pointer-events: none;
-        }
-        .about-layout { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 5rem; align-items: start; }
-        @media (max-width: 800px) { .about-layout { grid-template-columns: 1fr; gap: 3rem; } }
-
-        .about-body p { color: var(--muted2); font-size: 1rem; line-height: 1.85; margin-bottom: 1.25rem; }
-        .about-body p strong { color: var(--text); font-weight: 500; }
-
-        .about-tags { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 2rem; }
-        .about-tag {
-          font-size: .72rem; padding: 5px 14px; border-radius: 999px;
-          border: 1px solid var(--border); color: var(--muted2);
-          letter-spacing: .06em; text-transform: uppercase;
+        .hero-stack-label { font-family: var(--mono); font-size: .65rem; color: var(--muted); letter-spacing: .12em; }
+        .stack-chips { display: flex; gap: .5rem; flex-wrap: wrap; }
+        .stack-chip {
+          padding: 4px 10px; border-radius: 4px; font-family: var(--mono); font-size: .65rem;
+          letter-spacing: .06em; border: 1px solid var(--border);
+          background: rgba(255,255,255,0.02); color: var(--muted2);
           transition: border-color .2s, color .2s;
         }
-        .about-tag:hover { border-color: var(--border-h); color: var(--accent); }
+        .stack-chip:hover { border-color: var(--border2); color: var(--green); }
 
-        .about-cards { display: grid; grid-template-columns: 1fr 1fr; gap: .875rem; }
-        .about-card {
-          background: var(--card); border: 1px solid var(--border);
-          border-radius: 16px; padding: 1.5rem;
-          transition: border-color .3s, transform .3s;
+        .hero-numbers {
+          position: absolute; right: 2.5rem; bottom: 6rem;
+          display: flex; gap: 3rem; z-index: 2;
+          opacity: 0; animation: up .7s 1.2s forwards;
+        }
+        @media(max-width:900px) { .hero-numbers { display: none; } }
+        .h-num { text-align: center; }
+        .h-num-val { font-family: var(--mono); font-size: 2rem; font-weight: 500; color: var(--green); line-height: 1; }
+        .h-num-label { font-size: .65rem; letter-spacing: .12em; color: var(--muted); text-transform: uppercase; margin-top: 4px; font-family: var(--mono); }
+
+        @keyframes up { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:none} }
+
+        /* DIVIDER */
+        .div-wrap { padding: 0 2.5rem; max-width: 1280px; margin: 0 auto; }
+        .div-line { height: 1px; background: linear-gradient(90deg, transparent, var(--border2), transparent); }
+
+        /* SERVICES */
+        #about { padding: 8rem 2.5rem; position: relative; z-index: 2; }
+        .sec-wrap { max-width: 1280px; margin: 0 auto; }
+        .sec-label { font-family: var(--mono); font-size: .65rem; letter-spacing: .2em; color: var(--green); text-transform: uppercase; margin-bottom: .75rem; display: flex; align-items: center; gap: 8px; }
+        .sec-label::before { content: '//'; color: var(--muted); }
+        .sec-h2 { font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 800; letter-spacing: -.03em; line-height: 1; margin-bottom: 1rem; }
+        .sec-sub { color: var(--muted2); font-size: .95rem; max-width: 500px; line-height: 1.75; margin-bottom: 4rem; }
+
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+        @media(max-width:800px) { .about-grid { grid-template-columns: 1fr; gap: 2.5rem; } }
+
+        .about-text p { color: var(--muted2); font-size: .95rem; line-height: 1.85; margin-bottom: 1.25rem; }
+        .about-text strong { color: var(--text); font-weight: 500; }
+        .about-text .mono-tag { font-family: var(--mono); font-size: .75rem; color: var(--green); background: rgba(74,222,128,0.08); border: 1px solid var(--border); padding: 2px 8px; border-radius: 4px; display: inline-block; margin: 2px; }
+
+        .services-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        @media(max-width:600px) { .services-grid { grid-template-columns: 1fr; } }
+        .svc-card {
+          background: var(--surface); border: 1px solid var(--border);
+          border-radius: 12px; padding: 1.5rem;
+          transition: border-color .3s, transform .3s, box-shadow .3s;
           position: relative; overflow: hidden;
         }
-        .about-card::before {
-          content: ''; position: absolute; inset: 0; opacity: 0;
-          background: radial-gradient(circle at top left, rgba(0,194,255,0.05), transparent 60%);
-          transition: opacity .3s;
+        .svc-card::before {
+          content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+          background: linear-gradient(90deg, transparent, var(--green), transparent);
+          opacity: 0; transition: opacity .3s;
         }
-        .about-card:hover { border-color: var(--border-h); transform: translateY(-3px); }
-        .about-card:hover::before { opacity: 1; }
-        .about-card-num {
-          font-family: 'Syne', sans-serif; font-size: 2.6rem; font-weight: 800;
-          line-height: 1; margin-bottom: .4rem;
-          background: linear-gradient(135deg, var(--text), var(--accent));
-          -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-        .about-card-label { font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+        .svc-card:hover { border-color: var(--border2); transform: translateY(-3px); box-shadow: var(--glow); }
+        .svc-card:hover::before { opacity: 1; }
+        .svc-icon { font-size: 1.4rem; margin-bottom: 1rem; color: var(--green); font-family: var(--mono); }
+        .svc-title { font-size: .9rem; font-weight: 600; margin-bottom: .5rem; }
+        .svc-desc { font-size: .8rem; color: var(--muted2); line-height: 1.6; }
 
         /* SKILLS */
-        #skills { background: var(--bg2); position: relative; overflow: hidden; }
-        #skills::after {
-          content: ''; position: absolute; right: -100px; bottom: -100px;
-          width: 400px; height: 400px; border-radius: 50%;
-          background: radial-gradient(circle, rgba(0,194,255,0.04), transparent 70%);
+        #skills { background: var(--bg1); padding: 8rem 2.5rem; position: relative; z-index: 2; }
+        .skills-tabs { display: flex; gap: .5rem; margin-bottom: 2.5rem; flex-wrap: wrap; }
+        .skill-tab {
+          padding: 8px 18px; border-radius: 6px; font-family: var(--mono); font-size: .72rem;
+          letter-spacing: .08em; cursor: pointer; border: 1px solid var(--border);
+          background: none; color: var(--muted2); transition: all .2s;
+        }
+        .skill-tab.active { background: rgba(74,222,128,0.1); border-color: var(--border2); color: var(--green); }
+        .skill-tab:hover:not(.active) { border-color: rgba(255,255,255,0.12); color: var(--text); }
+
+        .skill-pills-grid { display: flex; flex-wrap: wrap; gap: .75rem; }
+        .skill-pill {
+          padding: 10px 18px; border-radius: 8px;
+          border: 1px solid var(--border); background: var(--surface);
+          font-size: .85rem; color: var(--muted2);
+          transition: all .25s; cursor: default;
+          display: flex; align-items: center; gap: 8px;
+          animation: popIn .35s cubic-bezier(.16,1,.3,1) both;
+        }
+        .skill-pill::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--green); flex-shrink: 0; opacity: .4; transition: opacity .2s; }
+        .skill-pill:hover { border-color: var(--border2); color: var(--text); transform: translateY(-2px); box-shadow: var(--glow); }
+        .skill-pill:hover::before { opacity: 1; }
+        @keyframes popIn { from{opacity:0;transform:scale(.85) translateY(10px)} to{opacity:1;transform:none} }
+
+        /* STACK ICONS */
+        .stack-icons-row { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 3rem; padding-top: 3rem; border-top: 1px solid var(--border); }
+        .stack-icon-item {
+          display: flex; flex-direction: column; align-items: center; gap: 6px;
+          cursor: default;
+        }
+        .stack-icon-circle {
+          width: 52px; height: 52px; border-radius: 12px;
+          border: 1px solid var(--border); background: var(--surface);
+          display: flex; align-items: center; justify-content: center;
+          font-family: var(--mono); font-size: .72rem; font-weight: 500;
+          transition: all .25s;
+        }
+        .stack-icon-item:hover .stack-icon-circle { transform: translateY(-4px); border-color: var(--border2); box-shadow: var(--glow); }
+        .stack-icon-name { font-size: .6rem; color: var(--muted); font-family: var(--mono); letter-spacing: .06em; }
+
+        /* PROJECTS */
+        #projects { padding: 8rem 2.5rem; position: relative; z-index: 2; }
+        .proj-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.25rem; }
+        @media(max-width:1000px) { .proj-grid { grid-template-columns: 1fr 1fr; } }
+        @media(max-width:640px) { .proj-grid { grid-template-columns: 1fr; } }
+
+        .proj-card {
+          background: var(--surface); border: 1px solid var(--border);
+          border-radius: 16px; padding: 1.75rem;
+          transition: border-color .3s, transform .3s, box-shadow .3s;
+          cursor: pointer; position: relative; overflow: hidden;
+          display: flex; flex-direction: column; gap: .75rem;
+        }
+        .proj-card::after {
+          content: ''; position: absolute; inset: 0; opacity: 0;
+          background: radial-gradient(circle at 70% 0%, var(--color, var(--green)) 0%, transparent 60%);
+          transition: opacity .4s;
+        }
+        .proj-card:hover { border-color: var(--border2); transform: translateY(-5px); box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+        .proj-card:hover::after { opacity: .05; }
+
+        .proj-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+        .proj-top { display: flex; justify-content: space-between; align-items: flex-start; }
+        .proj-top-left { display: flex; align-items: center; gap: 10px; }
+        .proj-arrow { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--muted2); transition: all .25s; }
+        .proj-card:hover .proj-arrow { background: var(--green); border-color: var(--green); color: var(--bg); transform: rotate(45deg); }
+        .proj-title { font-size: 1rem; font-weight: 600; line-height: 1.3; }
+        .proj-desc { font-size: .8rem; color: var(--muted2); line-height: 1.6; flex: 1; }
+        .proj-tags { display: flex; flex-wrap: wrap; gap: .4rem; }
+        .proj-tag { font-family: var(--mono); font-size: .62rem; padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border); color: var(--muted2); letter-spacing: .04em; }
+
+        /* CONTACT */
+        #contact { background: var(--bg1); padding: 8rem 2.5rem; position: relative; z-index: 2; overflow: hidden; }
+        #contact::before {
+          content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+          width: 600px; height: 600px; border-radius: 50%;
+          background: radial-gradient(circle, rgba(74,222,128,0.04) 0%, transparent 70%);
           pointer-events: none;
         }
 
-        .skills-list { display: flex; flex-direction: column; gap: 1.5rem; }
-        .skill-row { display: grid; grid-template-columns: 200px 1fr 48px; align-items: center; gap: 1.5rem; }
-        @media (max-width: 600px) { .skill-row { grid-template-columns: 1fr 40px; gap: 1rem; } .skill-row .skill-label { grid-column: 1 / -1; margin-bottom: -.5rem; } }
+        .contact-split { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; }
+        @media(max-width:800px) { .contact-split { grid-template-columns: 1fr; gap: 3rem; } }
 
-        .skill-label { font-size: .875rem; font-weight: 400; color: var(--text); }
-        .skill-sub { font-size: .7rem; color: var(--muted); display: block; margin-top: 1px; }
-
-        .skill-track {
-          height: 3px; background: rgba(255,255,255,0.05); border-radius: 2px; overflow: visible;
-          position: relative;
+        .contact-big-text {
+          font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; letter-spacing: -.03em; line-height: 1;
+          margin-bottom: 1.5rem;
         }
-        .skill-fill {
-          height: 100%; border-radius: 2px; width: 0;
-          background: linear-gradient(90deg, var(--accent2), var(--accent));
-          transition: width 1.4s cubic-bezier(.4,0,.2,1);
-          position: relative;
-        }
-        .skill-fill::after {
-          content: ''; position: absolute; right: -1px; top: 50%;
-          transform: translateY(-50%);
-          width: 8px; height: 8px; border-radius: 50%;
-          background: var(--accent);
-          box-shadow: 0 0 12px var(--accent);
-          opacity: 0; transition: opacity .3s 1.2s;
-        }
-        .skills-visible .skill-fill::after { opacity: 1; }
+        .contact-big-text span { color: var(--green); }
+        .contact-desc { color: var(--muted2); font-size: .95rem; line-height: 1.75; margin-bottom: 2.5rem; }
 
-        .skill-pct { font-size: .8rem; color: var(--accent); font-weight: 500; text-align: right; font-family: 'Syne', sans-serif; }
-
-        /* PROJECTS */
-        #projects { position: relative; }
-        .projects-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3.5rem; }
-        @media (max-width: 600px) { .projects-header { flex-direction: column; align-items: flex-start; gap: 1rem; } }
-        .projects-count { font-size: .8rem; color: var(--muted); letter-spacing: .06em; }
-
-        .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
-        @media (max-width: 700px) { .projects-grid { grid-template-columns: 1fr; } }
-
-        .proj-card {
-          background: var(--card); border: 1px solid var(--border);
-          border-radius: 20px; padding: 2rem; position: relative; overflow: hidden;
-          transition: border-color .3s, transform .3s;
-          display: flex; flex-direction: column; cursor: none;
+        .contact-chips { display: flex; flex-direction: column; gap: .75rem; }
+        .contact-chip {
+          display: flex; align-items: center; gap: 12px; padding: 1rem 1.25rem;
+          background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+          transition: border-color .2s;
         }
-        .proj-card::before {
-          content: ''; position: absolute; inset: 0; opacity: 0;
-          background: radial-gradient(ellipse at top right, rgba(0,194,255,0.06), transparent 60%);
-          transition: opacity .4s;
-        }
-        .proj-card:hover { border-color: var(--border-h); transform: translateY(-5px); }
-        .proj-card:hover::before { opacity: 1; }
+        .contact-chip:hover { border-color: var(--border2); }
+        .contact-chip-icon { width: 34px; height: 34px; border-radius: 8px; background: rgba(74,222,128,0.08); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+        .contact-chip-label { font-family: var(--mono); font-size: .6rem; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; }
+        .contact-chip-val { font-size: .85rem; color: var(--text); }
 
-        .proj-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.25rem; }
-        .proj-year { font-size: .7rem; letter-spacing: .12em; color: var(--muted); text-transform: uppercase; }
-        .proj-arrow {
-          width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--border);
-          display: flex; align-items: center; justify-content: center; color: var(--muted);
-          transition: background .2s, border-color .2s, color .2s, transform .2s;
-          font-size: 14px;
+        .f-group { margin-bottom: 1.1rem; }
+        .f-label { font-family: var(--mono); font-size: .62rem; letter-spacing: .14em; color: var(--muted); text-transform: uppercase; display: block; margin-bottom: .5rem; }
+        .f-input {
+          width: 100%; background: var(--surface2); border: 1px solid var(--border);
+          border-radius: 8px; padding: 12px 16px; color: var(--text);
+          font-family: var(--sans); font-size: .9rem; font-weight: 300;
+          outline: none; resize: none; transition: border-color .2s, box-shadow .2s;
         }
-        .proj-card:hover .proj-arrow { background: var(--accent); border-color: var(--accent); color: #05070f; transform: rotate(45deg); }
+        .f-input:focus { border-color: rgba(74,222,128,0.35); box-shadow: 0 0 0 3px rgba(74,222,128,0.06); }
+        .f-input::placeholder { color: var(--muted); }
+        textarea.f-input { height: 110px; }
+        .f-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        @media(max-width:500px) { .f-row { grid-template-columns: 1fr; } }
 
-        .proj-title { font-family: 'Syne', sans-serif; font-size: 1.25rem; font-weight: 700; margin-bottom: .75rem; line-height: 1.2; }
-        .proj-desc { font-size: .875rem; color: var(--muted2); line-height: 1.65; margin-bottom: 1.5rem; flex: 1; }
-        .proj-tags { display: flex; flex-wrap: wrap; gap: .5rem; }
-        .proj-tag {
-          font-size: .65rem; padding: 3px 10px; border-radius: 999px;
-          border: 1px solid var(--border); color: var(--muted);
-          letter-spacing: .07em; text-transform: uppercase;
-        }
-
-        /* CONTACT */
-        #contact { background: var(--bg2); position: relative; overflow: hidden; }
-        #contact::before {
-          content: ''; position: absolute; left: 50%; top: 0; transform: translateX(-50%);
-          width: 600px; height: 2px;
-          background: linear-gradient(90deg, transparent, var(--accent), var(--accent2), transparent);
-          opacity: 0.3;
-        }
-
-        .contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; }
-        @media (max-width: 800px) { .contact-layout { grid-template-columns: 1fr; gap: 3rem; } }
-
-        .contact-info p { color: var(--muted2); font-size: 1rem; line-height: 1.8; margin-bottom: 2.5rem; }
-        .contact-detail { display: flex; flex-direction: column; gap: 1rem; }
-        .contact-item {
-          display: flex; align-items: center; gap: 12px;
-          font-size: .875rem; color: var(--muted2);
-        }
-        .contact-item-icon {
-          width: 36px; height: 36px; border-radius: 10px;
-          background: rgba(0,194,255,0.06); border: 1px solid var(--border);
-          display: flex; align-items: center; justify-content: center;
-          font-size: 14px; flex-shrink: 0;
-        }
-
-        .form-group { margin-bottom: 1.25rem; }
-        .form-group label { display: block; font-size: .68rem; text-transform: uppercase; letter-spacing: .14em; color: var(--muted); margin-bottom: .6rem; }
-        .form-group input, .form-group textarea, .form-group select {
-          width: 100%; background: var(--card); border: 1px solid var(--border);
-          border-radius: 12px; padding: 13px 16px; color: var(--text);
-          font-family: 'Space Grotesk', sans-serif; font-size: .9rem; font-weight: 300;
-          outline: none; transition: border-color .25s, box-shadow .25s; resize: none;
-          -webkit-appearance: none;
-        }
-        .form-group input:focus, .form-group textarea:focus {
-          border-color: rgba(0,194,255,0.4);
-          box-shadow: 0 0 0 4px rgba(0,194,255,0.06);
-        }
-        .form-group textarea { height: 120px; }
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-        @media (max-width: 500px) { .form-row { grid-template-columns: 1fr; } }
-
-        .sent-state { text-align: center; padding: 3rem 0; }
-        .sent-icon { width: 56px; height: 56px; border-radius: 50%; background: rgba(0,255,179,0.1); border: 1px solid rgba(0,255,179,0.3); display: flex; align-items: center; justify-content: center; font-size: 22px; margin: 0 auto 1.25rem; }
-        .sent-state h3 { font-family: 'Syne', sans-serif; font-size: 1.5rem; margin-bottom: .5rem; }
-        .sent-state p { color: var(--muted2); font-size: .9rem; }
+        .sent-wrap { text-align: center; padding: 4rem 0; }
+        .sent-wrap h3 { font-size: 1.5rem; font-weight: 700; color: var(--green); margin-bottom: .5rem; }
+        .sent-wrap p { color: var(--muted2); font-size: .9rem; }
 
         /* FOOTER */
         footer {
-          border-top: 1px solid var(--border); padding: 2rem 3rem;
+          position: relative; z-index: 2;
+          border-top: 1px solid var(--border); padding: 2rem 2.5rem;
           display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
-          position: relative; z-index: 1;
         }
-        .footer-logo { font-family: 'Syne', sans-serif; font-size: .9rem; font-weight: 700; color: var(--muted); }
-        .footer-copy { font-size: .78rem; color: var(--muted); }
-        .footer-copy span { color: var(--accent); }
+        @media(max-width:640px) { footer { flex-direction: column; align-items: center; text-align: center; padding: 2rem 1.5rem; } }
+        .footer-logo { font-family: var(--mono); font-size: .8rem; color: var(--green); display: flex; align-items: center; gap: 6px; }
+        .footer-copy { font-family: var(--mono); font-size: .62rem; color: var(--muted); letter-spacing: .06em; }
+        .footer-copy span { color: var(--green); }
         .footer-links { display: flex; gap: 1.5rem; }
-        .footer-links a { font-size: .75rem; color: var(--muted); text-decoration: none; letter-spacing: .06em; text-transform: uppercase; transition: color .2s; }
-        .footer-links a:hover { color: var(--accent); }
+        .footer-links a { font-family: var(--mono); font-size: .62rem; color: var(--muted); text-decoration: none; letter-spacing: .1em; text-transform: uppercase; transition: color .2s; }
+        .footer-links a:hover { color: var(--green); }
 
         /* REVEAL */
-        .reveal { opacity: 0; transform: translateY(32px); transition: opacity .75s cubic-bezier(.4,0,.2,1), transform .75s cubic-bezier(.4,0,.2,1); }
-        .reveal.visible { opacity: 1; transform: none; }
-        .reveal-left { opacity: 0; transform: translateX(-32px); transition: opacity .75s cubic-bezier(.4,0,.2,1), transform .75s cubic-bezier(.4,0,.2,1); }
-        .reveal-left.visible { opacity: 1; transform: none; }
-        .reveal-right { opacity: 0; transform: translateX(32px); transition: opacity .75s cubic-bezier(.4,0,.2,1), transform .75s cubic-bezier(.4,0,.2,1); }
-        .reveal-right.visible { opacity: 1; transform: none; }
+        .r { opacity: 0; transform: translateY(30px); transition: opacity .75s cubic-bezier(.4,0,.2,1), transform .75s cubic-bezier(.4,0,.2,1); }
+        .r.v { opacity: 1; transform: none; }
+        .rl { opacity: 0; transform: translateX(-30px); transition: opacity .75s cubic-bezier(.4,0,.2,1), transform .75s cubic-bezier(.4,0,.2,1); }
+        .rl.v { opacity: 1; transform: none; }
+        .rr { opacity: 0; transform: translateX(30px); transition: opacity .75s cubic-bezier(.4,0,.2,1), transform .75s cubic-bezier(.4,0,.2,1); }
+        .rr.v { opacity: 1; transform: none; }
 
         /* MARQUEE */
-        .marquee-wrap { overflow: hidden; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 1.25rem 0; background: var(--bg2); }
-        .marquee-track { display: flex; gap: 3rem; animation: marquee 22s linear infinite; width: max-content; }
-        .marquee-track:hover { animation-play-state: paused; }
-        @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
-        .marquee-item { display: flex; align-items: center; gap: .75rem; white-space: nowrap; font-size: .75rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
-        .marquee-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); }
-
-        input::placeholder, textarea::placeholder { color: var(--muted); }
+        .mq-wrap { overflow: hidden; padding: 1.2rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--bg); position: relative; z-index: 2; }
+        .mq-track { display: flex; gap: 2.5rem; animation: mq 28s linear infinite; width: max-content; }
+        .mq-track.rev { animation: mqr 32s linear infinite; }
+        @keyframes mq { to { transform: translateX(-50%); } }
+        @keyframes mqr { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+        .mq-item { font-family: var(--mono); font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); display: flex; align-items: center; gap: .75rem; white-space: nowrap; }
+        .mq-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+        .mq-item.hl { color: rgba(74,222,128,0.5); }
       `}</style>
 
-      {/* Custom cursor */}
-      <div id="cursor" style={{ left: cursorPos.x, top: cursorPos.y }} />
-      <div id="cursor-dot" style={{ left: cursorPos.x, top: cursorPos.y }} />
+      {/* Cursor */}
+      <div id="c-ring" style={{ left: mouse.x, top: mouse.y }} />
+      <div id="c-dot" style={{ left: mouse.x, top: mouse.y }} />
+
+      {/* Grid canvas */}
+      <canvas id="grid-canvas" ref={canvasRef} />
 
       {/* NAV */}
-      <nav className={scrollY > 20 ? "scrolled" : ""}>
-        <div className="nav-logo">
-          <div className="nav-logo-dot" />
-          YN.dev
+      <nav className={scrollY > 20 ? "stuck" : ""}>
+        <div className="nav-wrap">
+          <div className="logo">
+            <span>~/yourname</span>
+            <span className="logo-cursor" />
+          </div>
+          <div className="nav-center">
+            {["about","skills","projects","contact"].map(s => (
+              <button key={s} className={`nav-pill ${activeSection === s ? "on" : ""}`} onClick={() => scrollTo(s)}>{s}</button>
+            ))}
+          </div>
+          <div className="nav-right">
+            <div className="nav-status">
+              <div className="status-dot" />
+              available for work
+            </div>
+            <button className="nav-hire" onClick={() => scrollTo("contact")}>hire me</button>
+          </div>
+          <button className={`ham ${menuOpen ? "open" : ""}`} onClick={() => setMenuOpen(!menuOpen)}>
+            <span /><span /><span />
+          </button>
         </div>
-        <ul className="nav-links">
-          {NAV.map((n) => (
-            <li key={n}>
-              <button className={active === n ? "active" : ""} onClick={() => scrollTo(n)}>{n}</button>
-            </li>
-          ))}
-          <li><button className="nav-cta" onClick={() => scrollTo("Contact")}>Hire Me</button></li>
-        </ul>
-        <button className={`hamburger ${menuOpen ? "open" : ""}`} onClick={() => setMenuOpen(!menuOpen)} aria-label="Menu">
-          <span /><span /><span />
-        </button>
       </nav>
-      <div className={`mobile-menu ${menuOpen ? "open" : ""}`}>
-        {NAV.map((n) => <button key={n} onClick={() => scrollTo(n)}>{n}</button>)}
-        <button onClick={() => scrollTo("Contact")} style={{ color: "var(--accent)" }}>Hire Me</button>
+      <div className={`mob ${menuOpen ? "open" : ""}`}>
+        {["About","Skills","Projects","Contact"].map(s => (
+          <button key={s} onClick={() => scrollTo(s.toLowerCase())}>{s}</button>
+        ))}
       </div>
 
       {/* HERO */}
-      <section className="hero" ref={heroRef}>
-        <canvas id="particles" ref={canvasRef} />
-        <div className="hero-grid-lines" />
-        <div className="hero-inner">
+      <section ref={heroRef} style={{ position: "relative", zIndex: 2 }}>
+        <div className="hero">
           <div className="hero-eyebrow">
-            <div className="hero-eyebrow-line" />
-            <span className="hero-eyebrow-text">10 Years of Building the Web</span>
+            <span className="eyebrow-tag">v3.0</span>
+            <span className="eyebrow-slash">//</span>
+            <span>5 years · Full-Stack · WordPress · AI</span>
           </div>
-          <h1 className="hero-headline">
-            <span className="line"><span>Crafting</span></span>
-            <span className="line"><span className="gradient-text">Digital</span></span>
-            <span className="line"><span>Experiences</span></span>
+
+          <h1 className="hero-h1">
+            <span className="h1-line"><span>I build</span></span>
+            <span className="h1-line"><span>the web.</span></span>
+            <span className="h1-line"><span>with intent.</span></span>
           </h1>
+
           <p className="hero-desc">
-            Senior web developer specializing in PHP, WordPress, and modern JavaScript frameworks. I build fast, scalable, and beautifully crafted web products that drive real results.
+            Senior web developer specializing in <strong>custom code, WordPress, and AI integrations</strong>. I don't use templates — I craft fast, scalable, and intelligent digital products that actually work.
           </p>
-          <div className="hero-actions">
-            <button className="btn-glow" onClick={() => scrollTo("Projects")}>View My Work</button>
-            <button className="btn-ghost" onClick={() => scrollTo("Contact")}>Let's Talk</button>
+
+          <div className="hero-row">
+            <button className="btn-code" onClick={() => scrollTo("projects")}>
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2"><path d="M1 7h12M7 1l6 6-6 6"/></svg>
+              view_projects()
+            </button>
+            <button className="btn-outline-g" onClick={() => scrollTo("contact")}>
+              get_in_touch()
+            </button>
           </div>
-        </div>
-        <div className="hero-stats">
-          {[{ num: "10", label: "Years Experience" }, { num: "50", label: "Projects Shipped" }, { num: "30", label: "Happy Clients" }].map((s) => (
-            <div className="hero-stat" key={s.label}>
-              <div className="hero-stat-num">{s.num}<sup>+</sup></div>
-              <div className="hero-stat-label">{s.label}</div>
+
+          <div className="hero-stack-row">
+            <span className="hero-stack-label">// stack</span>
+            <div className="stack-chips">
+              {["PHP","WordPress","React","Next.js","Elementor","ChatGPT API","Claude API","MySQL"].map(t => (
+                <span className="stack-chip" key={t}>{t}</span>
+              ))}
             </div>
-          ))}
-        </div>
-        <div className="hero-scroll-hint">
-          <div className="scroll-line" />
-          <span>Scroll</span>
-        </div>
-      </section>
-
-      {/* MARQUEE */}
-      <div className="marquee-wrap">
-        <div className="marquee-track">
-          {[...Array(2)].map((_, gi) =>
-            ["HTML & CSS", "PHP", "JavaScript", "React", "Next.js", "WordPress", "Elementor", "REST APIs", "Git", "MySQL", "WooCommerce", "Divi"].map((t) => (
-              <div className="marquee-item" key={`${gi}-${t}`}>
-                <div className="marquee-dot" />
-                {t}
-              </div>
-            ))
-          )}
-        </div>
-      </div>
-
-      {/* ABOUT */}
-      <section id="about">
-        <div className="section-inner">
-          <div className="about-layout">
-            <RevealDiv dir="left">
-              <div className="section-header">
-                <div className="section-eyebrow">
-                  <div className="section-eyebrow-line" />
-                  <span className="section-eyebrow-text">About Me</span>
-                </div>
-                <h2>A developer<br />who cares<br />about craft.</h2>
-              </div>
-              <div className="about-body">
-                <p>I'm a <strong>senior full-stack web developer</strong> with over a decade of experience turning complex problems into elegant, high-performance web solutions.</p>
-                <p>From building custom <strong>PHP backends</strong> and pixel-perfect WordPress themes to crafting modern <strong>React and Next.js</strong> applications — I bring full-stack expertise to every project I take on.</p>
-                <p>I've worked with startups, agencies, and enterprise clients across the globe, always prioritizing <strong>performance, maintainability, and user experience</strong>.</p>
-              </div>
-              <div className="about-tags">
-                {["PHP", "WordPress", "Next.js", "React", "Elementor", "WooCommerce", "MySQL", "REST APIs"].map((t) => (
-                  <span className="about-tag" key={t}>{t}</span>
-                ))}
-              </div>
-            </RevealDiv>
-            <RevealDiv dir="right">
-              <div className="about-cards">
-                {[
-                  { num: "10+", label: "Years Experience" },
-                  { num: "50+", label: "Projects Shipped" },
-                  { num: "30+", label: "Happy Clients" },
-                  { num: "100%", label: "Dedication" },
-                ].map((s) => (
-                  <div className="about-card" key={s.label}>
-                    <div className="about-card-num">{s.num}</div>
-                    <div className="about-card-label">{s.label}</div>
-                  </div>
-                ))}
-              </div>
-            </RevealDiv>
           </div>
-        </div>
-      </section>
 
-      {/* SKILLS */}
-      <section id="skills">
-        <div className="section-inner">
-          <RevealDiv>
-            <div className="section-header">
-              <div className="section-eyebrow">
-                <div className="section-eyebrow-line" />
-                <span className="section-eyebrow-text">Skills & Expertise</span>
+          <div className="hero-numbers">
+            {[["05+","Years"],["50+","Projects"],["30+","Clients"]].map(([n,l]) => (
+              <div className="h-num" key={l}>
+                <div className="h-num-val">{n}</div>
+                <div className="h-num-label">{l}</div>
               </div>
-              <h2>What I bring<br />to the table.</h2>
-            </div>
-          </RevealDiv>
-          <div className={`skills-list ${skillsVisible ? "skills-visible" : ""}`} ref={skillsRef}>
-            {SKILLS.map((s, i) => (
-              <RevealDiv key={s.label} style={{ transitionDelay: `${i * 0.07}s` }}>
-                <div className="skill-row">
-                  <div className="skill-label">
-                    {s.label}
-                    {s.sub && <span className="skill-sub">{s.sub}</span>}
-                  </div>
-                  <div className="skill-track">
-                    <div className="skill-fill" style={{ width: skillsVisible ? `${s.pct}%` : "0%", transitionDelay: `${i * 0.08}s` }} />
-                  </div>
-                  <div className="skill-pct">{s.pct}%</div>
-                </div>
-              </RevealDiv>
             ))}
           </div>
         </div>
       </section>
 
+      {/* MARQUEE 1 */}
+      <div className="mq-wrap">
+        <div className="mq-track">
+          {[...Array(2)].map((_,gi) => ["Custom WordPress","PHP 8","React","Next.js","Elementor Pro","Divi Builder","ChatGPT API","Claude API","WooCommerce","REST APIs","Oxygen Builder","TypeScript"].map(t => (
+            <div className={`mq-item ${t.includes("API") ? "hl" : ""}`} key={`${gi}${t}`}>
+              <div className="mq-dot" />{t}
+            </div>
+          )))}
+        </div>
+      </div>
+
+      {/* ABOUT / SERVICES */}
+      <section id="about">
+        <div className="sec-wrap">
+          <Rv>
+            <div className="sec-label">about</div>
+            <h2 className="sec-h2">A developer who<br />codes with purpose.</h2>
+            <p className="sec-sub">Not just another developer who Googles Stack Overflow. 5 years of deliberate, hands-on work across the full web stack.</p>
+          </Rv>
+
+          <div className="about-grid">
+            <Rv dir="l">
+              <div className="about-text">
+                <p>I'm a <strong>senior full-stack web developer</strong> with 5 years of hands-on experience building everything from <strong>custom WordPress ecosystems</strong> to modern <strong>React/Next.js applications</strong> — and now integrating cutting-edge <strong>AI APIs</strong> into web products.</p>
+                <p>I specialize in <strong>custom code</strong>. No page builders as a crutch, but wielded as power tools when the job calls for speed. My code is clean, documented, and built to last.</p>
+                <p>What sets me apart: I've been an early adopter of <strong>AI-assisted development</strong> — using ChatGPT, Claude, and GitHub Copilot not just as tools, but as part of a deliberate workflow that ships faster without cutting corners.</p>
+                <div style={{ marginTop: "1.5rem", display: "flex", flexWrap: "wrap", gap: ".5rem" }}>
+                  {["PHP 8","WordPress Core","Custom Plugins","REST APIs","React","Next.js","Elementor Pro","Divi","Beaver","Gutenberg","Oxygen","Bricks","ChatGPT API","Claude API"].map(t => (
+                    <span className="mono-tag" key={t}>{t}</span>
+                  ))}
+                </div>
+              </div>
+            </Rv>
+
+            <Rv dir="r">
+              <div className="services-grid">
+                {SERVICES.map((s, i) => (
+                  <div className="svc-card" key={s.title} style={{ animationDelay: `${i * .1}s` }}>
+                    <div className="svc-icon">{s.icon}</div>
+                    <div className="svc-title">{s.title}</div>
+                    <div className="svc-desc">{s.desc}</div>
+                  </div>
+                ))}
+              </div>
+            </Rv>
+          </div>
+        </div>
+      </section>
+
+      {/* MARQUEE 2 */}
+      <div className="mq-wrap">
+        <div className="mq-track rev">
+          {[...Array(2)].map((_,gi) => ["Performance First","Clean Code","AI Integration","Custom Plugins","Headless CMS","Core Web Vitals","WooCommerce","WCAG 2.1","PHP OOP","ISR Caching","REST API Design","Schema Markup"].map(t => (
+            <div className="mq-item" key={`${gi}${t}`}><div className="mq-dot" />{t}</div>
+          )))}
+        </div>
+      </div>
+
+      {/* SKILLS */}
+      <section id="skills">
+        <div className="sec-wrap">
+          <Rv>
+            <div className="sec-label">skills</div>
+            <h2 className="sec-h2">Every tool in<br />my arsenal.</h2>
+            <p className="sec-sub">5 years of deliberate skill-building across frontend, backend, page builders, and now AI tooling.</p>
+
+            <div className="skills-tabs">
+              {SKILLS.map((s, i) => (
+                <button key={s.cat} className={`skill-tab ${skillTab === i ? "active" : ""}`} onClick={() => setSkillTab(i)}>
+                  {s.cat}
+                </button>
+              ))}
+            </div>
+
+            <div className="skill-pills-grid">
+              {SKILLS[skillTab].items.map((item, i) => (
+                <div className="skill-pill" key={item} style={{ animationDelay: `${i * .04}s` }}>
+                  {item}
+                </div>
+              ))}
+            </div>
+
+            <div className="stack-icons-row">
+              {STACK_ICONS.map((s, i) => (
+                <div className="stack-icon-item" key={s.name}>
+                  <div className="stack-icon-circle" style={{ color: s.color, borderColor: `${s.color}22` }}>
+                    {s.name}
+                  </div>
+                  <div className="stack-icon-name">{s.name}</div>
+                </div>
+              ))}
+            </div>
+          </Rv>
+        </div>
+      </section>
+
       {/* PROJECTS */}
       <section id="projects">
-        <div className="section-inner">
-          <RevealDiv>
-            <div className="projects-header">
-              <div>
-                <div className="section-eyebrow">
-                  <div className="section-eyebrow-line" />
-                  <span className="section-eyebrow-text">Selected Work</span>
-                </div>
-                <h2>Projects that<br />speak for<br />themselves.</h2>
-              </div>
-              <div className="projects-count">{PROJECTS.length} Projects</div>
-            </div>
-          </RevealDiv>
-          <div className="projects-grid">
+        <div className="sec-wrap">
+          <Rv>
+            <div className="sec-label">projects</div>
+            <h2 className="sec-h2">Projects that<br />speak for themselves.</h2>
+            <p className="sec-sub">Real work, real clients, real results. Each project below solved a genuine problem with clean, maintainable code.</p>
+          </Rv>
+
+          <div className="proj-grid">
             {PROJECTS.map((p, i) => (
-              <RevealDiv key={p.title} style={{ transitionDelay: `${i * 0.1}s` }}>
-                <div className="proj-card" onClick={() => window.open(p.link, "_blank")}>
+              <Rv key={p.title} style={{ transitionDelay: `${i * 0.08}s` }}>
+                <div
+                  className="proj-card"
+                  style={{ "--color": p.color } as React.CSSProperties}
+                  onMouseEnter={() => setHoveredProj(i)}
+                  onMouseLeave={() => setHoveredProj(null)}
+                >
                   <div className="proj-top">
-                    <span className="proj-year">{p.year}</span>
+                    <div className="proj-top-left">
+                      <div className="proj-dot" style={{ background: p.color, boxShadow: `0 0 8px ${p.color}` }} />
+                    </div>
                     <div className="proj-arrow">↗</div>
                   </div>
                   <div className="proj-title">{p.title}</div>
-                  <p className="proj-desc">{p.desc}</p>
+                  <div className="proj-desc">{p.desc}</div>
                   <div className="proj-tags">
-                    {p.tags.map((t) => <span className="proj-tag" key={t}>{t}</span>)}
+                    {p.tags.map(t => <span className="proj-tag" key={t}>{t}</span>)}
                   </div>
                 </div>
-              </RevealDiv>
+              </Rv>
             ))}
           </div>
         </div>
@@ -809,101 +749,102 @@ export default function Portfolio() {
 
       {/* CONTACT */}
       <section id="contact">
-        <div className="section-inner">
-          <RevealDiv>
-            <div className="section-header" style={{ marginBottom: "3rem" }}>
-              <div className="section-eyebrow">
-                <div className="section-eyebrow-line" />
-                <span className="section-eyebrow-text">Get In Touch</span>
+        <div className="sec-wrap">
+          <div className="contact-split">
+            <Rv dir="l">
+              <div className="sec-label">contact</div>
+              <div className="contact-big-text">
+                Let's build<br />something<br /><span>worth using.</span>
               </div>
-              <h2>Let's build<br />something great.</h2>
-            </div>
-          </RevealDiv>
-          <div className="contact-layout">
-            <RevealDiv dir="left">
-              <div className="contact-info">
-                <p>Have a project in mind? Whether it's a complex web application, a WordPress site, or a React frontend — I'm available for new opportunities and collaborations.</p>
-                <div className="contact-detail">
-                  {[
-                    { icon: "✉", label: "yourname@email.com" },
-                    { icon: "📍", label: "Philippines · Available Worldwide" },
-                    { icon: "⚡", label: "Usually responds within 24 hours" },
-                  ].map((c) => (
-                    <div className="contact-item" key={c.label}>
-                      <div className="contact-item-icon">{c.icon}</div>
-                      {c.label}
+              <p className="contact-desc">
+                Got a WordPress project, a custom PHP system, a React app, or something AI-powered? I'm open to new work and ready to start fast.
+              </p>
+              <div className="contact-chips">
+                {[
+                  { icon: "✉", label: "Email", val: "yourname@email.com" },
+                  { icon: "📍", label: "Location", val: "Philippines · Remote Worldwide" },
+                  { icon: "⚡", label: "Response", val: "Within 24 hours" },
+                  { icon: "💡", label: "Open to", val: "Freelance · Contract · Full-time" },
+                ].map(c => (
+                  <div className="contact-chip" key={c.label}>
+                    <div className="contact-chip-icon">{c.icon}</div>
+                    <div>
+                      <div className="contact-chip-label">{c.label}</div>
+                      <div className="contact-chip-val">{c.val}</div>
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
               </div>
-            </RevealDiv>
-            <RevealDiv dir="right">
+            </Rv>
+
+            <Rv dir="r">
               {!sent ? (
                 <form onSubmit={handleSubmit}>
-                  <div className="form-row">
-                    <div className="form-group">
-                      <label>Name</label>
-                      <input type="text" placeholder="Your name" required />
+                  <div className="f-row">
+                    <div className="f-group">
+                      <label className="f-label">Name</label>
+                      <input className="f-input" type="text" placeholder="Your name" required />
                     </div>
-                    <div className="form-group">
-                      <label>Email</label>
-                      <input type="email" placeholder="your@email.com" required />
+                    <div className="f-group">
+                      <label className="f-label">Email</label>
+                      <input className="f-input" type="email" placeholder="your@email.com" required />
                     </div>
                   </div>
-                  <div className="form-group">
-                    <label>Subject</label>
-                    <input type="text" placeholder="Project inquiry" required />
+                  <div className="f-group">
+                    <label className="f-label">Project type</label>
+                    <input className="f-input" type="text" placeholder="e.g. WordPress site, React app, AI integration..." required />
                   </div>
-                  <div className="form-group">
-                    <label>Message</label>
-                    <textarea placeholder="Tell me about your project..." required />
+                  <div className="f-group">
+                    <label className="f-label">Message</label>
+                    <textarea className="f-input" placeholder="Tell me what you need built..." required />
                   </div>
-                  <button className="btn-glow" type="submit" style={{ width: "100%", justifyContent: "center" }}>
-                    {sending ? "Sending..." : "Send Message"}
+                  <button className="btn-code" type="submit" style={{ width: "100%", justifyContent: "center" }}>
+                    {sending ? "sending..." : (
+                      <>
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2"><path d="M1 7h12M7 1l6 6-6 6"/></svg>
+                        send_message()
+                      </>
+                    )}
                   </button>
                 </form>
               ) : (
-                <div className="sent-state">
-                  <div className="sent-icon">✓</div>
-                  <h3>Message received!</h3>
-                  <p>Thanks for reaching out. I'll get back to you within 24 hours.</p>
+                <div className="sent-wrap">
+                  <h3>// message sent!</h3>
+                  <p>Thanks for reaching out. I'll be in touch within 24 hours.</p>
                 </div>
               )}
-            </RevealDiv>
+            </Rv>
           </div>
         </div>
       </section>
 
       {/* FOOTER */}
       <footer>
-        <div className="footer-logo">YN.dev</div>
-        <div className="footer-copy">© {new Date().getFullYear()} <span>Your Name</span>. Built with Next.js & Vercel.</div>
+        <div className="footer-logo">
+          <span className="logo-cursor" style={{ width: 6, height: 14 }} />
+          ~/yourname
+        </div>
+        <div className="footer-copy">© {new Date().getFullYear()} <span>Your Name</span> · built with next.js + vercel</div>
         <div className="footer-links">
-          <a href="#">GitHub</a>
-          <a href="#">LinkedIn</a>
-          <a href="#">Twitter</a>
+          <a href="#">github</a>
+          <a href="#">linkedin</a>
+          <a href="#">twitter</a>
         </div>
       </footer>
     </>
   );
 }
 
-function RevealDiv({
-  children, className = "", style = {}, dir = "up",
-}: {
-  children: React.ReactNode; className?: string; style?: React.CSSProperties; dir?: "up" | "left" | "right";
+function Rv({ children, className = "", style = {}, dir = "u" }: {
+  children: React.ReactNode; className?: string; style?: React.CSSProperties; dir?: "u"|"l"|"r";
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const [vis, setVis] = useState(false);
+  const [v, setV] = useState(false);
   useEffect(() => {
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVis(true); }, { threshold: 0.08 });
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setV(true); }, { threshold: 0.06 });
     if (ref.current) obs.observe(ref.current);
     return () => obs.disconnect();
   }, []);
-  const cls = dir === "left" ? "reveal-left" : dir === "right" ? "reveal-right" : "reveal";
-  return (
-    <div ref={ref} className={`${cls} ${vis ? "visible" : ""} ${className}`} style={style}>
-      {children}
-    </div>
-  );
+  const cls = dir === "l" ? "rl" : dir === "r" ? "rr" : "r";
+  return <div ref={ref} className={`${cls} ${v ? "v" : ""} ${className}`} style={style}>{children}</div>;
 }
