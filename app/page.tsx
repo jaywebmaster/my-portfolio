@@ -582,7 +582,7 @@ export default function PortfolioV3() {
           </h1>
 
           <p className="hero-desc">
-            Web developer specializing in <strong>custom code, WordPress, and AI integrations</strong>. I don't use templates — I craft fast, scalable, and intelligent digital products that actually work.
+            Full-stack web developer specializing in <strong>custom development, WordPress solutions, and modern integrations</strong>. I build fast, scalable, and reliable digital products with a focus on performance, maintainability, and real-world results.
           </p>
 
           <div className="hero-row">
@@ -605,7 +605,7 @@ export default function PortfolioV3() {
           </div>
 
           <div className="hero-numbers">
-            {[["05+","Years"],["50+","Projects"],["30+","Clients"]].map(([n,l]) => (
+            {[["05+","Years"],["25+","Projects"],["10+","Clients"]].map(([n,l]) => (
               <div className="h-num" key={l}>
                 <div className="h-num-val">{n}</div>
                 <div className="h-num-label">{l}</div>
@@ -638,9 +638,9 @@ export default function PortfolioV3() {
           <div className="about-grid">
             <Rv dir="l">
               <div className="about-text">
-                <p>I'm a <strong>senior full-stack web developer</strong> with 5 years of hands-on experience building everything from <strong>custom WordPress ecosystems</strong> to modern <strong>React/Next.js applications</strong> — and now integrating cutting-edge <strong>AI APIs</strong> into web products.</p>
-                <p>I specialize in <strong>custom code</strong>. No page builders as a crutch, but wielded as power tools when the job calls for speed. My code is clean, documented, and built to last.</p>
-                <p>What sets me apart: I've been an early adopter of <strong>AI-assisted development</strong> — using ChatGPT, Claude, and GitHub Copilot not just as tools, but as part of a deliberate workflow that ships faster without cutting corners.</p>
+                <p>I'm a <strong>full-stack web developer</strong> with 5+ years of experience specializing in <strong>WordPress development</strong>, <strong>Shopify builds</strong>, and <strong>custom-coded solutions</strong> tailored to business needs.</p>
+                <p>I focus on <strong>clean, scalable custom code</strong>—building themes, plugins, and features from the ground up—while using <strong>page builders like Elementor</strong> strategically to deliver efficient and flexible results when needed.</p>
+                <p>From <strong>custom WordPress ecosystems</strong> to <strong>high-converting Shopify stores</strong>, I create fast, optimized, and maintainable websites that balance performance, usability, and long-term growth.</p>
                 <div style={{ marginTop: "1.5rem", display: "flex", flexWrap: "wrap", gap: ".5rem" }}>
                   {["PHP 8","WordPress Core","Custom Plugins","REST APIs","React","Next.js","Elementor Pro","Divi","Beaver","Gutenberg","Oxygen","Bricks","ChatGPT API","Claude API"].map(t => (
                     <span className="mono-tag" key={t}>{t}</span>
@@ -761,7 +761,7 @@ export default function PortfolioV3() {
               </p>
               <div className="contact-chips">
                 {[
-                  { icon: "✉", label: "Email", val: "yourname@email.com" },
+                  { icon: "✉", label: "Email", val: "jayvan.webmaster@gmail.com" },
                   { icon: "📍", label: "Location", val: "Philippines · Remote Worldwide" },
                   { icon: "⚡", label: "Response", val: "Within 24 hours" },
                   { icon: "💡", label: "Open to", val: "Freelance · Contract · Full-time" },
@@ -822,13 +822,13 @@ export default function PortfolioV3() {
       <footer>
         <div className="footer-logo">
           <span className="logo-cursor" style={{ width: 6, height: 14 }} />
-          ~/yourname
+          ~Jay
         </div>
-        <div className="footer-copy">© {new Date().getFullYear()} <span>Your Name</span> · built with next.js + vercel</div>
+        <div className="footer-copy">© {new Date().getFullYear()} <span>Jay</span> · built with next.js + vercel</div>
         <div className="footer-links">
-          <a href="#">github</a>
-          <a href="#">linkedin</a>
-          <a href="#">twitter</a>
+          <a href="https://github.com/jaywebmaster" target="_blank">GitHub</a>
+          <a href="https://www.linkedin.com/in/jayvan-dorig-15243b280/" target="_blank">LinkedIn</a>
+          <a href="https://www.facebook.com/dorig.jayvan" target="_blank">Facebook</a>
         </div>
       </footer>
     </>
