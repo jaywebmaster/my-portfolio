@@ -640,7 +640,7 @@ export default function PortfolioV3() {
           </div>
 
           <div className="hero-numbers">
-            {[["05+","Years"],["25+","Projects"],["10+","Clients"]].map(([n,l]) => (
+            {[["04","Years"],["20+","Projects"],["10+","Clients"]].map(([n,l]) => (
               <div className="h-num" key={l}>
                 <div className="h-num-val">{n}</div>
                 <div className="h-num-label">{l}</div>
