@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
+import emailjs from "@emailjs/browser";
 
 const SKILLS = [
   { cat: "Frontend", items: ["HTML5", "CSS3", "JavaScript ES6+", "TypeScript", "React", "Next.js", "Tailwind CSS", "GSAP"] },
