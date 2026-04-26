@@ -120,26 +120,44 @@ export default function PortfolioV3() {
     setMenuOpen(false);
   };
 
- const handleSubmit = (e: React.FormEvent) => {
-  e.preventDefault();
-  setSending(true);
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSending(true);
 
-  emailjs.sendForm(
-    "service_zq2lat5",
-    "template_ad3cm4k",
-    formRef.current!,
-    "ZKmUhx9DTtnWyhpHy"
-  )
-  .then(() => {
-    setSending(false);
-    setSent(true);
-  })
-  .catch((err) => {
-    console.error("EmailJS error:", err);
-    setSending(false);
-    alert("Error: " + JSON.stringify(err));
-  });
-};
+    const form = formRef.current!;
+    const templateParams = {
+      from_name: (form.elements.namedItem("from_name") as HTMLInputElement).value,
+      from_email: (form.elements.namedItem("from_email") as HTMLInputElement).value,
+      project_type: (form.elements.namedItem("project_type") as HTMLInputElement).value,
+      message: (form.elements.namedItem("message") as HTMLTextAreaElement).value,
+    };
+
+    // Template 1: notify you of new inquiry
+    emailjs.sendForm(
+      "service_zq2lat5",
+      "template_ad3cm4k",
+      form,
+      "ZKmUhx9DTtnWyhpHy"
+    )
+    .then(() => {
+      // Template 2: send confirmation to the person who submitted
+      return emailjs.send(
+        "service_zq2lat5",
+        "template_xtujx6c", // 👈 replace with your new template ID
+        templateParams,
+        "ZKmUhx9DTtnWyhpHy"
+      );
+    })
+    .then(() => {
+      setSending(false);
+      setSent(true);
+    })
+    .catch((err) => {
+      console.error("EmailJS error:", err);
+      setSending(false);
+      alert("Error: " + JSON.stringify(err));
+    });
+  };
 
   return (
     <>
