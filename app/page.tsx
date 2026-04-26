@@ -120,26 +120,26 @@ export default function PortfolioV3() {
     setMenuOpen(false);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSending(true);
+ const handleSubmit = (e: React.FormEvent) => {
+  e.preventDefault();
+  setSending(true);
 
-    emailjs.sendForm(
-      "service_zq2lat5",
-      "template_ad3cm4k",
-      formRef.current!,
-      "ZKmUhx9DTtnWyhpHy"
-    )
-    .then(() => {
-      setSending(false);
-      setSent(true);
-    })
-    .catch((err) => {
-      console.error("EmailJS error:", err);
-      setSending(false);
-      alert("Something went wrong. Please email me directly at jayvan.webmaster@gmail.com");
-    });
-  };
+  emailjs.sendForm(
+    "service_zq2lat5",
+    "template_ad3cm4k",
+    formRef.current!,
+    "ZKmUhx9DTtnWyhpHy"
+  )
+  .then(() => {
+    setSending(false);
+    setSent(true);
+  })
+  .catch((err) => {
+    console.error("EmailJS error:", err);
+    setSending(false);
+    alert("Error: " + JSON.stringify(err));
+  });
+};
 
   return (
     <>
