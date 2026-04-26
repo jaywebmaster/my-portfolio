@@ -52,6 +52,7 @@ export default function PortfolioV3() {
   const [loaded, setLoaded] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const heroRef = useRef<HTMLElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     setLoaded(true);
@@ -122,7 +123,22 @@ export default function PortfolioV3() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSending(true);
-    setTimeout(() => { setSending(false); setSent(true); }, 1800);
+
+    emailjs.sendForm(
+      "service_zq2lat5",
+      "template_ad3cm4k",
+      formRef.current!,
+      "ZKmUhx9DTtnWyhpHy"
+    )
+    .then(() => {
+      setSending(false);
+      setSent(true);
+    })
+    .catch((err) => {
+      console.error("EmailJS error:", err);
+      setSending(false);
+      alert("Something went wrong. Please email me directly at jayvan.webmaster@gmail.com");
+    });
   };
 
   return (
@@ -780,24 +796,24 @@ export default function PortfolioV3() {
 
             <Rv dir="r">
               {!sent ? (
-                <form onSubmit={handleSubmit}>
+                <form ref={formRef} onSubmit={handleSubmit}>
                   <div className="f-row">
                     <div className="f-group">
                       <label className="f-label">Name</label>
-                      <input className="f-input" type="text" placeholder="Your name" required />
+                      <input className="f-input" type="text" name="from_name" placeholder="Your name" required />
                     </div>
                     <div className="f-group">
                       <label className="f-label">Email</label>
-                      <input className="f-input" type="email" placeholder="your@email.com" required />
+                      <input className="f-input" type="email" name="from_email" placeholder="your@email.com" required />
                     </div>
                   </div>
                   <div className="f-group">
                     <label className="f-label">Project type</label>
-                    <input className="f-input" type="text" placeholder="e.g. WordPress site, React app, AI integration..." required />
+                    <input className="f-input" type="text" name="project_type" placeholder="e.g. WordPress site, React app, AI integration..." required />
                   </div>
                   <div className="f-group">
                     <label className="f-label">Message</label>
-                    <textarea className="f-input" placeholder="Tell me what you need built..." required />
+                    <textarea className="f-input" name="message" placeholder="Tell me what you need built..." required />
                   </div>
                   <button className="btn-code" type="submit" style={{ width: "100%", justifyContent: "center" }}>
                     {sending ? "sending..." : (
