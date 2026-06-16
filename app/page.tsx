@@ -270,68 +270,6 @@ export default function YRNRPage() {
         .fe-prize-label{font-family:var(--head);font-size:.65rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:4px}
 
         /* MEMBERS */
-        .role-clan .member-avatar,
-.role-clan .member-tag {
-  background: linear-gradient(135deg, rgba(168,85,247,.35), rgba(236,72,153,.25));
-  color: var(--purple);
-  border: 1px solid rgba(168,85,247,.35);
-}
-
-.role-vcm .member-avatar,
-.role-vcm .member-tag {
-  background: linear-gradient(135deg, rgba(124,58,237,.25), rgba(168,85,247,.15));
-  color: #a78bfa;
-  border: 1px solid rgba(124,58,237,.3);
-}
-
-.role-hc .member-avatar,
-.role-hc .member-tag {
-  background: linear-gradient(135deg, rgba(239,68,68,.2), rgba(251,146,60,.2));
-  color: #ef4444;
-  border: 1px solid rgba(239,68,68,.25);
-}
-
-.role-ex .member-avatar,
-.role-ex .member-tag {
-  background: linear-gradient(135deg, rgba(34,211,238,.2), rgba(96,165,250,.2));
-  color: #22d3ee;
-  border: 1px solid rgba(34,211,238,.25);
-}
-
-.role-adm .member-avatar,
-.role-adm .member-tag {
-  background: rgba(34,197,94,0.12);
-  color: #22c55e;
-  border: 1px solid rgba(34,197,94,0.25);
-}
-
-.role-mod .member-avatar,
-.role-mod .member-tag {
-  background: rgba(239,68,68,0.1);
-  color: var(--red);
-  border: 1px solid rgba(239,68,68,0.2);
-}
-
-.role-esc .member-avatar,
-.role-esc .member-tag {
-  background: rgba(251,146,60,0.12);
-  color: #fb923c;
-  border: 1px solid rgba(251,146,60,0.25);
-}
-
-.role-muse .member-avatar,
-.role-muse .member-tag {
-  background: rgba(236,72,153,0.12);
-  color: var(--pink);
-  border: 1px solid rgba(236,72,153,0.25);
-}
-
-.role-vip .member-avatar,
-.role-vip .member-tag {
-  background: rgba(234,179,8,0.12);
-  color: #fbbf24;
-  border: 1px solid rgba(234,179,8,0.25);
-}
         .members-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem}
         @media(max-width:1000px){.members-grid{grid-template-columns:repeat(3,1fr)}}
         @media(max-width:560px){.members-grid{grid-template-columns:1fr 1fr}}
@@ -626,29 +564,21 @@ export default function YRNRPage() {
           </div>
           <div className="rv members-grid">
             {[
-              { role: "clan", initials: "CM", tag: "Clan Master", name: "Bombszee" },
-
-  { role: "vcm", initials: "VCM", tag: "Vice CM", name: "Ceejay" },
-  { role: "vcm", initials: "VCM", tag: "Vice CM", name: "Xuxi" },
-
-  { role: "hc", initials: "HC", tag: "HC", name: "Jay" },
-  { role: "hc", initials: "HC", tag: "HC", name: "Solana" },
-  { role: "hc", initials: "HC", tag: "HC", name: "Eiseu" },
-  { role: "hc", initials: "HC", tag: "HC", name: "Hakan" },
-
-  { role: "ex", initials: "EX", tag: "Examiner", name: "Jaydee" },
-  { role: "ex", initials: "EX", tag: "Examiner", name: "Lawther" },
-
-  { role: "adm", initials: "ADM", tag: "Admin", name: "Yeji" },
-
-  { role: "mod", initials: "MOD", tag: "Moderator", name: "Tzukii" },
-
-  { role: "esc", initials: "ESC", tag: "Escort", name: "Demi" },
-
-  { role: "muse", initials: "MUSE", tag: "Muse", name: "Smurfette" },
-
-  { role: "vip", initials: "VIP", tag: "VIP", name: "Minty" },
-  { role: "vip", initials: "VIP", tag: "VIP", name: "Mina" },
+              { role: "gm",  initials: "GM",  tag: "GM",  name: "Bombszee" },
+              { role: "dev", initials: "DEV", tag: "Dev", name: "Jay"      },
+              { role: "dev", initials: "DEV", tag: "Dev", name: "Xuxi"     },
+              { role: "mod", initials: "MOD", tag: "Mod", name: "Jaydee"   },
+              { role: "mod", initials: "MOD", tag: "Mod", name: "Tzukii"   },
+              { role: "mod", initials: "MOD", tag: "Mod", name: "Lawther"  },
+              { role: "mod", initials: "MOD", tag: "Mod", name: "Ceejay"   },
+              { role: "mod", initials: "MOD", tag: "Mod", name: "Solana"   },
+              { role: "mod", initials: "MOD", tag: "Mod", name: "Eiseu"   },
+              { role: "cm",  initials: "CM",  tag: "CM",  name: "Hakan"    },
+              { role: "cm",  initials: "CM",  tag: "CM",  name: "Yeji"     },
+              { role: "cm",  initials: "CM",  tag: "CM",  name: "Mina"     },
+              { role: "vip",  initials: "VIP",  tag: "VIP",  name: "Minty"     },
+              { role: "vip",  initials: "VIP",  tag: "VIP",  name: "Demi"     },
+              { role: "vip",  initials: "VIP",  tag: "VIP",  name: "Smurfette"     },
             ].map((m) => (
               <div className={`member-card role-${m.role}`} key={m.name}>
                 <div className="member-avatar">{m.initials}</div>
