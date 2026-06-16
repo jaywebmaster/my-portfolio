@@ -565,7 +565,7 @@ export default function YRNRPage() {
               { role: "dev", initials: "DEV", tag: "Dev", name: "Jay"      },
               { role: "dev", initials: "DEV", tag: "Dev", name: "Xuxi"     },
               { role: "mod", initials: "MOD", tag: "Mod", name: "Jaydee"   },
-              { role: "mod", initials: "MOD", tag: "Mod", name: "Tzukki"   },
+              { role: "mod", initials: "MOD", tag: "Mod", name: "Tzukii"   },
               { role: "mod", initials: "MOD", tag: "Mod", name: "Lawther"  },
               { role: "mod", initials: "MOD", tag: "Mod", name: "Ceejay"   },
               { role: "mod", initials: "MOD", tag: "Mod", name: "Solana"   },
@@ -581,7 +581,7 @@ export default function YRNRPage() {
           </div>
           <div className="rv" style={{ marginTop: "2.5rem", display: "flex", flexWrap: "wrap", gap: "1rem" }}>
             {[
-              { color: "rgba(168,85,247,.3)", border: "rgba(168,85,247,.4)", label: "GM — Guild Master" },
+              { color: "rgba(168,85,247,.3)", border: "rgba(168,85,247,.4)", label: "GM — Game Master" },
               { color: "rgba(34,211,238,.2)", border: "rgba(34,211,238,.3)", label: "Dev — Developer" },
               { color: "rgba(239,68,68,.2)",  border: "rgba(239,68,68,.3)",  label: "Mod — Moderator" },
               { color: "rgba(34,197,94,.2)",  border: "rgba(34,197,94,.3)",  label: "CM — Community Manager" },
