@@ -571,6 +571,7 @@ export default function YRNRPage() {
               { role: "mod", initials: "MOD", tag: "Mod", name: "Solana"   },
               { role: "cm",  initials: "CM",  tag: "CM",  name: "Hakan"    },
               { role: "cm",  initials: "CM",  tag: "CM",  name: "Yeji"     },
+              { role: "cm",  initials: "CM",  tag: "CM",  name: "Mina"     },
             ].map((m) => (
               <div className={`member-card role-${m.role}`} key={m.name}>
                 <div className="member-avatar">{m.initials}</div>
@@ -653,7 +654,7 @@ export default function YRNRPage() {
                 ))}
               </div>
             </div>
-            <a href="https://discord.gg/YMqy2MgmN"><button className="btn-discord">Join YRNR Discord</button></a>
+            <a href="https://discord.gg/U7xan4K2N7"><button className="btn-discord">Join YRNR Discord</button></a>
           </div>
         </div>
       </section>
