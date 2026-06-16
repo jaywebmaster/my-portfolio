@@ -287,6 +287,8 @@ export default function YRNRPage() {
         .role-mod .member-tag{background:rgba(239,68,68,0.1);color:var(--red);border:1px solid rgba(239,68,68,.2)}
         .role-cm .member-tag{background:rgba(34,197,94,0.1);color:#22c55e;border:1px solid rgba(34,197,94,.2)}
         .member-name{font-family:var(--head);font-size:.95rem;font-weight:700;letter-spacing:.06em;line-height:1.2}
+        .role-vip .member-tag { background: rgba(234, 179, 8, 0.12); color: #fbbf24; border: 1px solid rgba(234, 179, 8, 0.25);}
+        .role-vip .member-avatar { background: linear-gradient(135deg,rgba(251, 191, 36, 0.25),rgba(245, 158, 11, 0.2));color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.3);}
 
         /* GIVEAWAY */
         .gw-banner{border:1px solid rgba(168,85,247,0.25);border-radius:12px;background:var(--surface2);overflow:hidden;position:relative}
