@@ -403,9 +403,9 @@ export default function YRNRPage() {
               <span>PH-based · Open to all · Events · Giveaways</span>
             </div>
             <h1 className="hero-title">
-              <span className="line"><span>One Org.</span></span>
-              <span className="line"><span>All Games.</span></span>
-              <span className="line"><span>No matter what you play.</span></span>
+              <span className="line"><span>Welcome to</span></span>
+              <span className="line"><span>Yearner (YRNR)</span></span>
+              <span className="line"><span>May wow at bitaw kaming lahat</span></span>
             </h1>
             <p className="hero-desc">
               <strong>YRNR (Yearner)</strong> is a gaming community organization that brings together players of{" "}
