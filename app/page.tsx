@@ -277,12 +277,12 @@ export default function YRNRPage() {
         .member-card:hover{border-color:var(--border2);transform:translateY(-3px);box-shadow:var(--glow-p)}
         .member-avatar{width:56px;height:56px;border-radius:10px;margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:1rem;font-weight:900;letter-spacing:.05em;position:relative}
         .member-avatar::after{content:'';position:absolute;inset:0;border-radius:10px;background:inherit;filter:blur(12px);opacity:.3;z-index:-1;transform:scale(1.3)}
-        .role-ceo .member-avatar{background:linear-gradient(135deg,rgba(168,85,247,.3),rgba(236,72,153,.3));color:var(--purple);border:1px solid rgba(168,85,247,.3)}
+        .role-gm .member-avatar{background:linear-gradient(135deg,rgba(168,85,247,.3),rgba(236,72,153,.3));color:var(--purple);border:1px solid rgba(168,85,247,.3)}
         .role-dev .member-avatar{background:linear-gradient(135deg,rgba(34,211,238,.2),rgba(96,165,250,.2));color:#22d3ee;border:1px solid rgba(34,211,238,.25)}
         .role-mod .member-avatar{background:linear-gradient(135deg,rgba(239,68,68,.2),rgba(251,146,60,.2));color:var(--red);border:1px solid rgba(239,68,68,.25)}
         .role-cm .member-avatar{background:linear-gradient(135deg,rgba(34,197,94,.2),rgba(20,184,166,.2));color:#22c55e;border:1px solid rgba(34,197,94,.25)}
         .member-tag{font-family:var(--head);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;padding:3px 8px;border-radius:2px;display:inline-block;margin-bottom:.5rem}
-        .role-ceo .member-tag{background:rgba(168,85,247,0.1);color:var(--purple);border:1px solid rgba(168,85,247,.2)}
+        .role-gm .member-tag{background:rgba(168,85,247,0.1);color:var(--purple);border:1px solid rgba(168,85,247,.2)}
         .role-dev .member-tag{background:rgba(34,211,238,0.1);color:#22d3ee;border:1px solid rgba(34,211,238,.2)}
         .role-mod .member-tag{background:rgba(239,68,68,0.1);color:var(--red);border:1px solid rgba(239,68,68,.2)}
         .role-cm .member-tag{background:rgba(34,197,94,0.1);color:#22c55e;border:1px solid rgba(34,197,94,.2)}
@@ -407,7 +407,7 @@ export default function YRNRPage() {
             <h1 className="hero-title">
               <span className="line"><span>Welcome to</span></span>
               <span className="line"><span>Yearner (YRNR)</span></span>
-              <span className="line"><span>May wow at bitaw kaming lahat</span></span>
+              <span className="line"><span>May wow at bitaw kaming lahat.</span></span>
             </h1>
             <p className="hero-desc">
               <strong>YRNR (Yearner)</strong> is a gaming community organization that brings together players of{" "}
@@ -421,6 +421,7 @@ export default function YRNRPage() {
               <span className="hero-games-label">// we play</span>
               <div className="game-badge"><div className="dot" style={{ background: "var(--pink)" }} />iDate: ReVibe</div>
               <div className="game-badge"><div className="dot" style={{ background: "var(--red)" }} />Valorant</div>
+              <div className="game-badge"><div className="dot" style={{ background: "var(--purple)" }} />Roblox</div>
             </div>
           </div>
           <div className="hero-stats">
@@ -563,7 +564,7 @@ export default function YRNRPage() {
           </div>
           <div className="rv members-grid">
             {[
-              { role: "ceo",  initials: "CEO",  tag: "CEO",  name: "Bombszee" },
+              { role: "gm",  initials: "GM",  tag: "GM",  name: "Bombszee" },
               { role: "dev", initials: "DEV", tag: "Dev", name: "Jay"      },
               { role: "dev", initials: "DEV", tag: "Dev", name: "Xuxi"     },
               { role: "mod", initials: "MOD", tag: "Mod", name: "Jaydee"   },
