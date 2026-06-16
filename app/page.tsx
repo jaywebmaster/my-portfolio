@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import './YRNR.css';
 
 const YRNR: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
