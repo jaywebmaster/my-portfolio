@@ -653,7 +653,7 @@ export default function YRNRPage() {
                 ))}
               </div>
             </div>
-            <button className="btn-discord">Join YRNR Discord</button>
+            <a href="https://discord.gg/xqQQEJEDe"><button className="btn-discord">Join YRNR Discord</button></a>
           </div>
         </div>
       </section>
@@ -684,7 +684,7 @@ export default function YRNRPage() {
             </div>
           </div>
           <div className="footer-bottom">
-            <div className="footer-copy">© 2024–2025 <span>YRNR</span> · Yearner Community · PH-based · Open to all</div>
+            <div className="footer-copy">© 2026 <span>YRNR</span> · Yearner Community · PH-based · Open to all</div>
             <div className="footer-links">
               <a href="#join">Discord</a>
               <a href="#events">Events</a>
