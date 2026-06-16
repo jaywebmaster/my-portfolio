@@ -557,7 +557,7 @@ export default function YRNRPage() {
           <div className="rv">
             <div className="sec-label">the team</div>
             <h2 className="sec-h2">The people behind<br />YRNR.</h2>
-            <p className="sec-sub">From leadership to community management — here's everyone keeping YRNR running strong.</p>
+            <p className="sec-sub">From leadership to server management — here's everyone na may wow at bitaw both Valorant at iDate Revibe,Revival at Next Generation.</p>
           </div>
           <div className="rv members-grid">
             {[
