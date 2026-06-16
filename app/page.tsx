@@ -653,7 +653,7 @@ export default function YRNRPage() {
                 ))}
               </div>
             </div>
-            <a href="https://discord.gg/xqQQEJEDe"><button className="btn-discord">Join YRNR Discord</button></a>
+            <a href="https://discord.gg/YMqy2MgmN"><button className="btn-discord">Join YRNR Discord</button></a>
           </div>
         </div>
       </section>
