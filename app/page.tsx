@@ -563,7 +563,7 @@ export default function YRNRPage() {
           </div>
           <div className="rv members-grid">
             {[
-              { role: "gm",  initials: "GM",  tag: "GM",  name: "Bombszee" },
+              { role: "ceo",  initials: "CEO",  tag: "CEO",  name: "Bombszee" },
               { role: "dev", initials: "DEV", tag: "Dev", name: "Jay"      },
               { role: "dev", initials: "DEV", tag: "Dev", name: "Xuxi"     },
               { role: "mod", initials: "MOD", tag: "Mod", name: "Jaydee"   },
@@ -571,6 +571,7 @@ export default function YRNRPage() {
               { role: "mod", initials: "MOD", tag: "Mod", name: "Lawther"  },
               { role: "mod", initials: "MOD", tag: "Mod", name: "Ceejay"   },
               { role: "mod", initials: "MOD", tag: "Mod", name: "Solana"   },
+              { role: "mod", initials: "MOD", tag: "Mod", name: "Eiseu"   },
               { role: "cm",  initials: "CM",  tag: "CM",  name: "Hakan"    },
               { role: "cm",  initials: "CM",  tag: "CM",  name: "Yeji"     },
               { role: "cm",  initials: "CM",  tag: "CM",  name: "Mina"     },
