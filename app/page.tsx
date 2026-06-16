@@ -398,7 +398,7 @@ export default function YRNRPage() {
         <div className="hero">
           <div className="hero-content">
             <div className="hero-eyebrow">
-              <span className="eyebrow-pill">Est. 2024</span>
+              <span className="eyebrow-pill">Est. April 5, 2026</span>
               <span className="eyebrow-slash">//</span>
               <span>PH-based · Open to all · Events · Giveaways</span>
             </div>
@@ -572,6 +572,9 @@ export default function YRNRPage() {
               { role: "cm",  initials: "CM",  tag: "CM",  name: "Hakan"    },
               { role: "cm",  initials: "CM",  tag: "CM",  name: "Yeji"     },
               { role: "cm",  initials: "CM",  tag: "CM",  name: "Mina"     },
+              { role: "vip",  initials: "VIP",  tag: "VIP",  name: "Minty"     },
+              { role: "vip",  initials: "VIP",  tag: "VIP",  name: "Demi"     },
+              { role: "vip",  initials: "VIP",  tag: "VIP",  name: "Smurfette"     },
             ].map((m) => (
               <div className={`member-card role-${m.role}`} key={m.name}>
                 <div className="member-avatar">{m.initials}</div>
@@ -586,6 +589,7 @@ export default function YRNRPage() {
               { color: "rgba(34,211,238,.2)", border: "rgba(34,211,238,.3)", label: "Dev — Developer" },
               { color: "rgba(239,68,68,.2)",  border: "rgba(239,68,68,.3)",  label: "Mod — Moderator" },
               { color: "rgba(34,197,94,.2)",  border: "rgba(34,197,94,.3)",  label: "CM — Community Manager" },
+              { color: "rgba(34,197,94,.2)",  border: "rgba(34,197,94,.3)",  label: "VIP — Very Important Person" },
             ].map((l) => (
               <div key={l.label} style={{ display: "flex", alignItems: "center", gap: 8, fontFamily: "var(--head)", fontSize: ".72rem", letterSpacing: ".1em", textTransform: "uppercase", color: "var(--muted2)" }}>
                 <div style={{ width: 10, height: 10, borderRadius: 3, background: l.color, border: `1px solid ${l.border}` }} />
