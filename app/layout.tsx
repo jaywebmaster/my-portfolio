@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Yearner",
+  title: "Jay's Portfolio",
   icons: {
     icon: "/yrnr.png",
   },
