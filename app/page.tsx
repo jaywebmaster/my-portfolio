@@ -25,12 +25,17 @@ const STACK_ICONS = [
 ];
 
 const PROJECTS = [
-  { title: "AI-Powered CMS", desc: "Custom WordPress CMS with integrated ChatGPT API for auto-content generation and SEO optimization. Serving 500k+ monthly visitors.", tags: ["PHP", "WordPress", "ChatGPT API", "MySQL"], color: "#10a37f" },
-  { title: "E-Commerce Platform", desc: "WooCommerce store with custom Elementor theme and AI product recommendations engine. 3x conversion rate improvement.", tags: ["Elementor", "WooCommerce", "PHP", "AI"], color: "#6c63ff" },
-  { title: "SaaS Dashboard", desc: "Full-featured Next.js analytics dashboard with real-time data, Vercel AI SDK integration, and custom REST API.", tags: ["Next.js", "React", "Vercel AI", "API"], color: "#00d4ff" },
-  { title: "Custom Plugin Suite", desc: "Suite of 12 custom WordPress plugins replacing $2,000/yr in subscriptions. Clean PHP 8 OOP architecture.", tags: ["PHP 8", "WordPress", "OOP", "MySQL"], color: "#ff6b35" },
-  { title: "Headless Blog Engine", desc: "Headless WordPress with Next.js frontend, ISR caching, and Claude API for intelligent content tagging.", tags: ["Next.js", "WordPress", "Claude API", "ISR"], color: "#f59e0b" },
-  { title: "Page Builder Theme", desc: "Commercial Oxygen Builder theme sold on ThemeForest with 800+ sales. Fully responsive, WCAG 2.1 compliant.", tags: ["Oxygen", "CSS", "PHP", "JS"], color: "#ec4899" },
+  { title: "AI-Powered CMS", desc: "Custom WordPress CMS with integrated ChatGPT API for auto-content generation and SEO optimization. Serving 500k+ monthly visitors.", tags: ["PHP", "WordPress", "ChatGPT API", "MySQL"], color: "#10a37f", url: "" },
+  { title: "E-Commerce Platform", desc: "WooCommerce store with custom Elementor theme and AI product recommendations engine. 3x conversion rate improvement.", tags: ["Elementor", "WooCommerce", "PHP", "AI"], color: "#6c63ff", url: "" },
+  { title: "SaaS Dashboard", desc: "Full-featured Next.js analytics dashboard with real-time data, Vercel AI SDK integration, and custom REST API.", tags: ["Next.js", "React", "Vercel AI", "API"], color: "#00d4ff", url: "" },
+  { title: "Custom Plugin Suite", desc: "Suite of 12 custom WordPress plugins replacing $2,000/yr in subscriptions. Clean PHP 8 OOP architecture.", tags: ["PHP 8", "WordPress", "OOP", "MySQL"], color: "#ff6b35", url: "" },
+  { title: "Headless Blog Engine", desc: "Headless WordPress with Next.js frontend, ISR caching, and Claude API for intelligent content tagging.", tags: ["Next.js", "WordPress", "Claude API", "ISR"], color: "#f59e0b", url: "" },
+  { title: "Page Builder Theme", desc: "Commercial Oxygen Builder theme sold on ThemeForest with 800+ sales. Fully responsive, WCAG 2.1 compliant.", tags: ["Oxygen", "CSS", "PHP", "JS"], color: "#ec4899", url: "" },
+  { title: "Atlantic AE", desc: "Corporate website for a nationwide architectural firm. Clean Elementor build with multi-page structure covering services, team, and project portfolios.", tags: ["Elementor", "WordPress", "PHP", "CSS"], color: "#38bdf8", url: "https://atlantic-ae.com/" },
+  { title: "Love Inc. Cedar Valley", desc: "Non-profit website for a church-mobilizing organization. Elementor build with event management, donation flows, and volunteer intake forms.", tags: ["Elementor", "WordPress", "WooCommerce", "Events"], color: "#4ade80", url: "https://loveinccv.org/" },
+  { title: "Cherie Inn", desc: "Restaurant website for a Grand Rapids European-style café. Elementor build featuring menus, banquet info, location map, and branded visual design.", tags: ["Elementor", "WordPress", "PHP", "CSS"], color: "#f97316", url: "https://cherieinn.com/" },
+  { title: "Cooper People Group", desc: "Full-service HR consulting firm site built with Elementor. Features detailed service pages, testimonials carousel, newsletter signup, and a branded design system.", tags: ["Elementor", "WordPress", "PHP", "CSS"], color: "#a78bfa", url: "https://cooperpg.com/" },
+  { title: "Next Step West Michigan", desc: "Non-profit social enterprise site built with Elementor. Features mega menus, program pages, donation integration, and impact-focused storytelling layouts.", tags: ["Elementor", "WordPress", "PHP", "CSS"], color: "#2dd4bf", url: "https://nextstep-wm.org/" },
 ];
 
 const SERVICES = [
@@ -132,7 +137,6 @@ export default function PortfolioV3() {
       message: (form.elements.namedItem("message") as HTMLTextAreaElement).value,
     };
 
-    // Template 1: notify you of new inquiry
     emailjs.sendForm(
       "service_zq2lat5",
       "template_ad3cm4k",
@@ -140,10 +144,9 @@ export default function PortfolioV3() {
       "ZKmUhx9DTtnWyhpHy"
     )
     .then(() => {
-      // Template 2: send confirmation to the person who submitted
       return emailjs.send(
         "service_zq2lat5",
-        "template_xtujx6c", // 👈 replace with your new template ID
+        "template_xtujx6c",
         templateParams,
         "ZKmUhx9DTtnWyhpHy"
       );
@@ -464,6 +467,7 @@ export default function PortfolioV3() {
           transition: border-color .3s, transform .3s, box-shadow .3s;
           cursor: pointer; position: relative; overflow: hidden;
           display: flex; flex-direction: column; gap: .75rem;
+          text-decoration: none; color: inherit;
         }
         .proj-card::after {
           content: ''; position: absolute; inset: 0; opacity: 0;
@@ -733,7 +737,7 @@ export default function PortfolioV3() {
             </div>
 
             <div className="stack-icons-row">
-              {STACK_ICONS.map((s, i) => (
+              {STACK_ICONS.map((s) => (
                 <div className="stack-icon-item" key={s.name}>
                   <div className="stack-icon-circle" style={{ color: s.color, borderColor: `${s.color}22` }}>
                     {s.name}
@@ -758,24 +762,48 @@ export default function PortfolioV3() {
           <div className="proj-grid">
             {PROJECTS.map((p, i) => (
               <Rv key={p.title} style={{ transitionDelay: `${i * 0.08}s` }}>
-                <div
-                  className="proj-card"
-                  style={{ "--color": p.color } as React.CSSProperties}
-                  onMouseEnter={() => setHoveredProj(i)}
-                  onMouseLeave={() => setHoveredProj(null)}
-                >
-                  <div className="proj-top">
-                    <div className="proj-top-left">
-                      <div className="proj-dot" style={{ background: p.color, boxShadow: `0 0 8px ${p.color}` }} />
+                {p.url ? (
+                  <a
+                    href={p.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="proj-card"
+                    style={{ "--color": p.color } as React.CSSProperties}
+                    onMouseEnter={() => setHoveredProj(i)}
+                    onMouseLeave={() => setHoveredProj(null)}
+                  >
+                    <div className="proj-top">
+                      <div className="proj-top-left">
+                        <div className="proj-dot" style={{ background: p.color, boxShadow: `0 0 8px ${p.color}` }} />
+                      </div>
+                      <div className="proj-arrow">↗</div>
                     </div>
-                    <div className="proj-arrow">↗</div>
+                    <div className="proj-title">{p.title}</div>
+                    <div className="proj-desc">{p.desc}</div>
+                    <div className="proj-tags">
+                      {p.tags.map(t => <span className="proj-tag" key={t}>{t}</span>)}
+                    </div>
+                  </a>
+                ) : (
+                  <div
+                    className="proj-card"
+                    style={{ "--color": p.color } as React.CSSProperties}
+                    onMouseEnter={() => setHoveredProj(i)}
+                    onMouseLeave={() => setHoveredProj(null)}
+                  >
+                    <div className="proj-top">
+                      <div className="proj-top-left">
+                        <div className="proj-dot" style={{ background: p.color, boxShadow: `0 0 8px ${p.color}` }} />
+                      </div>
+                      <div className="proj-arrow">↗</div>
+                    </div>
+                    <div className="proj-title">{p.title}</div>
+                    <div className="proj-desc">{p.desc}</div>
+                    <div className="proj-tags">
+                      {p.tags.map(t => <span className="proj-tag" key={t}>{t}</span>)}
+                    </div>
                   </div>
-                  <div className="proj-title">{p.title}</div>
-                  <div className="proj-desc">{p.desc}</div>
-                  <div className="proj-tags">
-                    {p.tags.map(t => <span className="proj-tag" key={t}>{t}</span>)}
-                  </div>
-                </div>
+                )}
               </Rv>
             ))}
           </div>
