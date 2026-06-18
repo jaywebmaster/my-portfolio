@@ -25,12 +25,12 @@ const STACK_ICONS = [
 ];
 
 const PROJECTS = [
-  { title: "AI-Powered CMS", desc: "Custom WordPress CMS with integrated ChatGPT API for auto-content generation and SEO optimization. Serving 500k+ monthly visitors.", tags: ["PHP", "WordPress", "ChatGPT API", "MySQL"], color: "#10a37f", url: "" },
-  { title: "E-Commerce Platform", desc: "WooCommerce store with custom Elementor theme and AI product recommendations engine. 3x conversion rate improvement.", tags: ["Elementor", "WooCommerce", "PHP", "AI"], color: "#6c63ff", url: "" },
-  { title: "SaaS Dashboard", desc: "Full-featured Next.js analytics dashboard with real-time data, Vercel AI SDK integration, and custom REST API.", tags: ["Next.js", "React", "Vercel AI", "API"], color: "#00d4ff", url: "" },
-  { title: "Custom Plugin Suite", desc: "Suite of 12 custom WordPress plugins replacing $2,000/yr in subscriptions. Clean PHP 8 OOP architecture.", tags: ["PHP 8", "WordPress", "OOP", "MySQL"], color: "#ff6b35", url: "" },
-  { title: "Headless Blog Engine", desc: "Headless WordPress with Next.js frontend, ISR caching, and Claude API for intelligent content tagging.", tags: ["Next.js", "WordPress", "Claude API", "ISR"], color: "#f59e0b", url: "" },
-  { title: "Page Builder Theme", desc: "Commercial Oxygen Builder theme sold on ThemeForest with 800+ sales. Fully responsive, WCAG 2.1 compliant.", tags: ["Oxygen", "CSS", "PHP", "JS"], color: "#ec4899", url: "" },
+  // { title: "AI-Powered CMS", desc: "Custom WordPress CMS with integrated ChatGPT API for auto-content generation and SEO optimization. Serving 500k+ monthly visitors.", tags: ["PHP", "WordPress", "ChatGPT API", "MySQL"], color: "#10a37f", url: "" },
+  // { title: "E-Commerce Platform", desc: "WooCommerce store with custom Elementor theme and AI product recommendations engine. 3x conversion rate improvement.", tags: ["Elementor", "WooCommerce", "PHP", "AI"], color: "#6c63ff", url: "" },
+  // { title: "SaaS Dashboard", desc: "Full-featured Next.js analytics dashboard with real-time data, Vercel AI SDK integration, and custom REST API.", tags: ["Next.js", "React", "Vercel AI", "API"], color: "#00d4ff", url: "" },
+  // { title: "Custom Plugin Suite", desc: "Suite of 12 custom WordPress plugins replacing $2,000/yr in subscriptions. Clean PHP 8 OOP architecture.", tags: ["PHP 8", "WordPress", "OOP", "MySQL"], color: "#ff6b35", url: "" },
+  // { title: "Headless Blog Engine", desc: "Headless WordPress with Next.js frontend, ISR caching, and Claude API for intelligent content tagging.", tags: ["Next.js", "WordPress", "Claude API", "ISR"], color: "#f59e0b", url: "" },
+  // { title: "Page Builder Theme", desc: "Commercial Oxygen Builder theme sold on ThemeForest with 800+ sales. Fully responsive, WCAG 2.1 compliant.", tags: ["Oxygen", "CSS", "PHP", "JS"], color: "#ec4899", url: "" },
   { title: "Atlantic AE", desc: "Corporate website for a nationwide architectural firm. Clean Elementor build with multi-page structure covering services, team, and project portfolios.", tags: ["Elementor", "WordPress", "PHP", "CSS"], color: "#38bdf8", url: "https://atlantic-ae.com/" },
   { title: "Love Inc. Cedar Valley", desc: "Non-profit website for a church-mobilizing organization. Elementor build with event management, donation flows, and volunteer intake forms.", tags: ["Elementor", "WordPress", "WooCommerce", "Events"], color: "#4ade80", url: "https://loveinccv.org/" },
   { title: "Cherie Inn", desc: "Restaurant website for a Grand Rapids European-style café. Elementor build featuring menus, banquet info, location map, and branded visual design.", tags: ["Elementor", "WordPress", "PHP", "CSS"], color: "#f97316", url: "https://cherieinn.com/" },
