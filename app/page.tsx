@@ -3,6 +3,8 @@ import path from "node:path";
 import { PLATFORMS, countByPlatform, projects } from "@/data/projects";
 import { site } from "@/data/site";
 import { stackGroups } from "@/data/stack";
+import { CountUp } from "@/components/CountUp";
+import { Reveal } from "@/components/Reveal";
 import { WorkGrid } from "@/components/WorkGrid";
 
 /** Resolved at build time: a card shows a placeholder when its screenshot is missing. */
@@ -18,13 +20,28 @@ export default function Home() {
   const counts = countByPlatform(projects);
   const platformsUsed = PLATFORMS.filter((p) => counts[p] > 0).length;
 
+  // Last word of the tagline gets the gradient accent.
+  const taglineWords = site.tagline.split(" ");
+  const taglineLast = taglineWords.pop();
+
+  const stats = [
+    { label: "Live client sites", value: projects.length },
+    { label: "Platforms", value: platformsUsed },
+    { label: "WordPress builds", value: counts.WordPress },
+    { label: "Shopify stores", value: counts.Shopify },
+  ];
+
   return (
     <>
       <main>
         <section className="hero">
+          <div className="hero-bg" aria-hidden="true" />
           <div className="container">
             <p className="eyebrow">Web development studio</p>
-            <h1>{site.tagline}</h1>
+            <h1>
+              {taglineWords.join(" ")}{" "}
+              <span className="h1-accent">{taglineLast}</span>
+            </h1>
             <p className="lede">{site.intro}</p>
             <div className="hero-actions">
               <a className="btn btn-primary" href="#work">
@@ -32,53 +49,51 @@ export default function Home() {
               </a>
             </div>
             <dl className="hero-stats">
-              <div>
-                <dt>Live client sites</dt>
-                <dd>{projects.length}</dd>
-              </div>
-              <div>
-                <dt>Platforms</dt>
-                <dd>{platformsUsed}</dd>
-              </div>
-              <div>
-                <dt>WordPress builds</dt>
-                <dd>{counts.WordPress}</dd>
-              </div>
-              <div>
-                <dt>Shopify stores</dt>
-                <dd>{counts.Shopify}</dd>
-              </div>
+              {stats.map((stat, index) => (
+                <div key={stat.label}>
+                  <dt>{stat.label}</dt>
+                  <dd>
+                    <CountUp value={stat.value} delay={500 + index * 120} />
+                  </dd>
+                </div>
+              ))}
             </dl>
           </div>
         </section>
 
         <section id="work" className="section">
           <div className="container">
-            <div className="section-head">
+            <Reveal className="section-head">
               <p className="eyebrow">Work</p>
               <h2>Websites we have designed and built</h2>
               <p className="lede">
                 Every project below is live. Filter by platform, then open any
                 site in a new tab.
               </p>
-            </div>
-            <WorkGrid projects={work} />
+            </Reveal>
+            <Reveal delay={120}>
+              <WorkGrid projects={work} />
+            </Reveal>
           </div>
         </section>
 
         <section id="stack" className="section">
           <div className="container">
-            <div className="section-head">
+            <Reveal className="section-head">
               <p className="eyebrow">Stack</p>
               <h2>What we build with</h2>
               <p className="lede">
                 We pick the platform that fits the brief, build it properly,
                 and wire it into your CRM so every lead has somewhere to go.
               </p>
-            </div>
+            </Reveal>
             <div className="stack-groups">
-              {stackGroups.map((group) => (
-                <div className="stack-group" key={group.title}>
+              {stackGroups.map((group, index) => (
+                <Reveal
+                  className="stack-group"
+                  key={group.title}
+                  delay={index * 140}
+                >
                   <h3>{group.title}</h3>
                   <ul className="chip-list">
                     {group.items.map((item) => (
@@ -87,7 +102,7 @@ export default function Home() {
                       </li>
                     ))}
                   </ul>
-                </div>
+                </Reveal>
               ))}
             </div>
           </div>

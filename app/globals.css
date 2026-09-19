@@ -99,12 +99,36 @@ h2 {
   transition:
     background-color 0.15s,
     border-color 0.15s,
-    color 0.15s;
+    color 0.15s,
+    transform 0.2s;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(0) scale(0.98);
 }
 
 .btn-primary {
+  position: relative;
+  overflow: hidden;
   background: var(--accent);
   color: var(--accent-ink);
+}
+
+.btn-primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, 0.35) 50%, transparent 60%);
+  transform: translateX(-120%);
+  transition: transform 0.6s ease;
+}
+
+.btn-primary:hover::after {
+  transform: translateX(120%);
 }
 
 .btn-primary:hover {
@@ -166,6 +190,9 @@ h2 {
 
 /* Hero */
 .hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   padding-block: 72px 64px;
 }
 
@@ -217,6 +244,7 @@ h2 {
 
 .hero-stats dd {
   margin: 0;
+  font-variant-numeric: tabular-nums;
   font-size: 1.75rem;
   font-weight: 600;
   letter-spacing: -0.02em;
@@ -252,7 +280,12 @@ h2 {
   transition:
     background-color 0.15s,
     border-color 0.15s,
-    color 0.15s;
+    color 0.15s,
+    transform 0.15s;
+}
+
+.filter-tab:active {
+  transform: scale(0.96);
 }
 
 .filter-tab:hover {
@@ -307,13 +340,17 @@ h2 {
   text-decoration: none;
   overflow: hidden;
   transition:
-    border-color 0.2s,
-    transform 0.2s;
+    border-color 0.35s,
+    transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1),
+    box-shadow 0.35s;
 }
 
 .card:hover {
-  border-color: var(--border-strong);
-  transform: translateY(-2px);
+  border-color: rgba(74, 222, 128, 0.45);
+  transform: translateY(-6px);
+  box-shadow:
+    0 24px 48px -20px rgba(0, 0, 0, 0.7),
+    0 0 40px -12px rgba(74, 222, 128, 0.35);
 }
 
 .card-media {
@@ -329,6 +366,25 @@ h2 {
   height: 100%;
   object-fit: cover;
   object-position: top center;
+  transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.card:hover .card-img {
+  transform: scale(1.05);
+}
+
+.card-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(18, 26, 34, 0.6), transparent 45%);
+  opacity: 0;
+  transition: opacity 0.35s;
+  pointer-events: none;
+}
+
+.card:hover .card-media::after {
+  opacity: 1;
 }
 
 .card-placeholder {
@@ -395,6 +451,14 @@ h2 {
 
 .card:hover .card-visit {
   color: var(--accent);
+}
+
+.card-visit svg {
+  transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.card:hover .card-visit svg {
+  transform: translate(3px, -3px);
 }
 
 /* Platform badges */
@@ -467,6 +531,16 @@ h2 {
   border-radius: 10px;
   background: var(--surface);
   font-size: 0.95rem;
+  transition:
+    transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1),
+    border-color 0.25s,
+    background-color 0.25s;
+}
+
+.chip:hover {
+  transform: translateY(-2px);
+  border-color: rgba(74, 222, 128, 0.4);
+  background: #16202a;
 }
 
 /* Footer */
@@ -515,12 +589,185 @@ h2 {
   }
 
   .card,
+  .card-img,
   .btn,
-  .filter-tab {
+  .filter-tab,
+  .chip {
     transition: none;
   }
 
-  .card:hover {
+  .card:hover,
+  .card:hover .card-img,
+  .chip:hover,
+  .btn:hover {
     transform: none;
+  }
+}
+
+/* Motion. Everything below is decorative and only runs for people who have
+   not asked for reduced motion. Content is fully visible without it. */
+.h1-accent {
+  color: var(--accent);
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 75% 70% at 35% 45%, #000 20%, transparent 75%);
+}
+
+.hero-bg::before,
+.hero-bg::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+}
+
+.hero-bg::before {
+  width: 640px;
+  height: 640px;
+  left: 42%;
+  top: -40%;
+  background: radial-gradient(circle, rgba(74, 222, 128, 0.22), transparent 62%);
+}
+
+.hero-bg::after {
+  width: 520px;
+  height: 520px;
+  left: 68%;
+  top: 25%;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.14), transparent 62%);
+}
+
+@media (max-width: 767px) {
+  .hero-bg::before {
+    left: 20%;
+  }
+
+  .hero-bg::after {
+    left: 45%;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(28px);
+    }
+
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes drift {
+    from {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+
+    to {
+      transform: translate3d(-90px, 70px, 0) scale(1.18);
+    }
+  }
+
+  @keyframes pulse {
+    to {
+      box-shadow: 0 0 0 12px rgba(74, 222, 128, 0);
+    }
+  }
+
+  @keyframes shimmer {
+    to {
+      background-position: 200% center;
+    }
+  }
+
+  @keyframes pop {
+    50% {
+      transform: scale(1.06);
+    }
+  }
+
+  /* Hero entrance, staggered top to bottom. */
+  .hero .eyebrow,
+  .hero h1,
+  .hero .lede,
+  .hero-actions,
+  .hero-stats {
+    animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+
+  .hero h1 {
+    animation-delay: 60ms;
+  }
+
+  .hero .lede {
+    animation-delay: 180ms;
+  }
+
+  .hero-actions {
+    animation-delay: 300ms;
+  }
+
+  .hero-stats {
+    animation-delay: 420ms;
+  }
+
+  .hero .eyebrow::before {
+    content: "";
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin-right: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    vertical-align: middle;
+    box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.6);
+    animation: pulse 2.2s ease-out infinite;
+  }
+
+  .h1-accent {
+    background: linear-gradient(90deg, var(--accent), #a7f3d0 35%, #38bdf8 65%, var(--accent));
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: shimmer 7s linear infinite;
+  }
+
+  .hero-bg::before {
+    animation: drift 22s ease-in-out infinite alternate;
+  }
+
+  .hero-bg::after {
+    animation: drift 26s ease-in-out infinite alternate-reverse;
+  }
+
+  /* Scroll reveals. Reveal.tsx adds .reveal-pending below the fold and .in when seen. */
+  .reveal-pending {
+    opacity: 0;
+  }
+
+  .reveal.in {
+    animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    animation-delay: var(--delay, 0ms);
+  }
+
+  /* Cards stagger in once their section is revealed, and again on every filter change. */
+  .reveal.in .work-grid > li {
+    animation: rise 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    animation-delay: calc(min(var(--i, 0), 11) * 45ms);
+  }
+
+  .filter-tab.is-active {
+    animation: pop 0.3s ease-out;
   }
 }

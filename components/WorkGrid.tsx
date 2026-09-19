@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type CSSProperties } from "react";
 import { PLATFORMS, countByPlatform, type Platform } from "@/data/projects";
 import { ProjectCard, type WorkItem } from "./ProjectCard";
 
@@ -42,9 +42,10 @@ export function WorkGrid({ projects }: { projects: WorkItem[] }) {
         Showing {visible.length} of {projects.length} projects
       </p>
 
-      <ul className="work-grid">
-        {visible.map((project) => (
-          <li key={project.slug}>
+      {/* Keyed by filter so the cards remount and replay their staggered entrance. */}
+      <ul className="work-grid" key={filter}>
+        {visible.map((project, index) => (
+          <li key={project.slug} style={{ "--i": index } as CSSProperties}>
             <ProjectCard project={project} />
           </li>
         ))}
