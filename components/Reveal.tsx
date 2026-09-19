@@ -33,6 +33,9 @@ export function Reveal({
     }
 
     el.classList.add("reveal-pending");
+    // Threshold 0 with a small inset: fire once the top edge is 8% into the
+    // viewport. A ratio threshold would never fire for elements taller than
+    // the viewport, such as the 30-card grid on a phone.
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (!entry.isIntersecting) return;
@@ -40,7 +43,7 @@ export function Reveal({
         el.classList.add("in");
         observer.disconnect();
       },
-      { threshold: 0.12 },
+      { threshold: 0, rootMargin: "0px 0px -8% 0px" },
     );
     observer.observe(el);
     return () => observer.disconnect();
