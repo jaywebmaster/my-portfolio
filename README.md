@@ -22,7 +22,7 @@ Sites that fail to capture (timeouts, bot walls) are listed in `scripts/screensh
 
 ## Canonical URL
 
-Metadata, Open Graph, `sitemap.xml` and `robots.txt` read the origin from `NEXT_PUBLIC_SITE_URL` (see `.env.example`). When it is unset on Vercel the build falls back to `VERCEL_PROJECT_PRODUCTION_URL`, so a project rename does not need a code change.
+Metadata, Open Graph, `sitemap.xml` and `robots.txt` read the origin from `NEXT_PUBLIC_SITE_URL`. The production default is committed in `.env.production` (`https://portfolio-webmaster.vercel.app`); a value set in Vercel's Environment Variables overrides it, and if both are missing the build falls back to `VERCEL_PROJECT_PRODUCTION_URL`.
 
 ## Develop
 

@@ -40,5 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# keep the env template
+# keep the env template and the non-secret production default
 !.env.example
+!.env.production
