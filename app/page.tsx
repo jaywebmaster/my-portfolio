@@ -3,7 +3,6 @@ import path from "node:path";
 import { PLATFORMS, countByPlatform, projects } from "@/data/projects";
 import { site } from "@/data/site";
 import { stackGroups } from "@/data/stack";
-import { ContactForm } from "@/components/ContactForm";
 import { WorkGrid } from "@/components/WorkGrid";
 
 /** Resolved at build time: a card shows a placeholder when its screenshot is missing. */
@@ -21,24 +20,7 @@ export default function Home() {
 
   return (
     <>
-      <header className="site-header">
-        <div className="container">
-          <a className="wordmark" href="#top" aria-label={`${site.name} home`}>
-            <span className="wordmark-dot" aria-hidden="true" />
-            {site.name}
-          </a>
-          <nav className="site-nav" aria-label="Primary">
-            <a href="#work">Work</a>
-            <a href="#stack">Stack</a>
-            <a href="#contact">Contact</a>
-            <a className="btn btn-primary" href="#contact">
-              Start a project
-            </a>
-          </nav>
-        </div>
-      </header>
-
-      <main id="top">
+      <main>
         <section className="hero">
           <div className="container">
             <p className="eyebrow">Web development studio</p>
@@ -47,9 +29,6 @@ export default function Home() {
             <div className="hero-actions">
               <a className="btn btn-primary" href="#work">
                 See our work
-              </a>
-              <a className="btn btn-ghost" href="#contact">
-                Start a project
               </a>
             </div>
             <dl className="hero-stats">
@@ -93,8 +72,8 @@ export default function Home() {
               <p className="eyebrow">Stack</p>
               <h2>What we build with</h2>
               <p className="lede">
-                We pick the platform that fits the brief, then build it
-                properly.
+                We pick the platform that fits the brief, build it properly,
+                and wire it into your CRM so every lead has somewhere to go.
               </p>
             </div>
             <div className="stack-groups">
@@ -111,27 +90,6 @@ export default function Home() {
                 </div>
               ))}
             </div>
-          </div>
-        </section>
-
-        <section id="contact" className="section">
-          <div className="container contact-grid">
-            <div className="contact-intro">
-              <p className="eyebrow">Contact</p>
-              <h2>Have a site to build or rebuild?</h2>
-              <p className="lede">
-                Tell us about the project and we will come back with a plan and
-                a quote.
-              </p>
-              <a className="contact-email" href={`mailto:${site.email}`}>
-                {site.email}
-              </a>
-              <ul className="contact-meta">
-                <li>{site.location}</li>
-                <li>Replies within one business day</li>
-              </ul>
-            </div>
-            <ContactForm />
           </div>
         </section>
       </main>

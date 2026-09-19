@@ -4,9 +4,7 @@ export const site = {
   title: "Portfolio — Web Development Work",
   tagline: "Websites built to perform.",
   intro:
-    "We design and build websites on WordPress, Shopify, Webflow and Next.js for e-commerce brands, service businesses and clinics.",
-  email: "jayvan.webmaster@gmail.com",
-  location: "Philippines, working with clients worldwide",
+    "We design and build websites on WordPress, Shopify, Webflow and Next.js for e-commerce brands, service businesses and clinics, and connect them to GoHighLevel CRM.",
   social: [
     { label: "GitHub", href: "https://github.com/jaywebmaster" },
     {
@@ -20,7 +18,8 @@ export const site = {
 /**
  * Canonical origin, without a trailing slash.
  *
- * 1. NEXT_PUBLIC_SITE_URL when set (Vercel > Settings > Environment Variables).
+ * 1. NEXT_PUBLIC_SITE_URL when set (.env.production, or Vercel > Settings >
+ *    Environment Variables, which overrides the file).
  * 2. VERCEL_PROJECT_PRODUCTION_URL, which Vercel injects at build time and
  *    which follows the project's production domain automatically.
  * 3. localhost for local builds.

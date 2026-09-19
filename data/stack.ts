@@ -21,6 +21,17 @@ export const stackGroups: StackGroup[] = [
     ],
   },
   {
+    title: "CRM & Marketing Automation",
+    items: [
+      "GoHighLevel (GHL)",
+      "CRM setup and pipelines",
+      "Funnels and landing pages",
+      "Booking calendars",
+      "Email and SMS automations",
+      "Form, webhook and website integrations",
+    ],
+  },
+  {
     title: "AI-assisted development",
     items: [
       "ChatGPT",
