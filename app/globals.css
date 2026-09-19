@@ -592,46 +592,6 @@ h2 {
   background: #16202a;
 }
 
-/* Footer */
-.site-footer {
-  padding-block: 28px;
-  border-top: 1px solid var(--border);
-  color: var(--muted);
-  font-size: 0.9rem;
-}
-
-.site-footer .container {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px 24px;
-}
-
-.site-footer p {
-  margin: 0;
-}
-
-.footer-links {
-  display: flex;
-  gap: 4px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.footer-links a {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  padding: 0 10px;
-  text-decoration: none;
-}
-
-.footer-links a:hover {
-  color: var(--text);
-}
-
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

@@ -174,24 +174,6 @@ export default function Home() {
           </div>
         </section>
       </main>
-
-      <footer className="site-footer">
-        <div className="container">
-          <p>
-            © {new Date().getFullYear()} {site.name}. Built with Next.js,
-            deployed on Vercel.
-          </p>
-          <ul className="footer-links">
-            {site.social.map((link) => (
-              <li key={link.label}>
-                <a href={link.href} target="_blank" rel="noopener noreferrer">
-                  {link.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </footer>
     </>
   );
 }

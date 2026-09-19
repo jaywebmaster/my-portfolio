@@ -5,14 +5,6 @@ export const site = {
   tagline: "Websites built to perform.",
   intro:
     "We design and build websites on WordPress, Shopify, Webflow and Next.js for e-commerce brands, service businesses and clinics, and connect them to GoHighLevel CRM.",
-  social: [
-    { label: "GitHub", href: "https://github.com/jaywebmaster" },
-    {
-      label: "LinkedIn",
-      href: "https://www.linkedin.com/in/jayvan-dorig-15243b280/",
-    },
-    { label: "Facebook", href: "https://www.facebook.com/dorig.jayvan" },
-  ],
 };
 
 /**
