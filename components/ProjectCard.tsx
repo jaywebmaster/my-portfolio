@@ -7,9 +7,11 @@ export type WorkItem = Project & { hasThumbnail: boolean };
 export function ProjectCard({ project }: { project: WorkItem }) {
   const { name, url, platform, thumbnail, hasThumbnail } = project;
   const badgeClass = `badge badge-${platformKey(platform)}`;
+  const domain = new URL(url).hostname.replace(/^www\./, "");
 
   return (
     <a className="card" href={url} target="_blank" rel="noopener noreferrer">
+      <span className="card-spot" aria-hidden="true" />
       <div className="card-media">
         {hasThumbnail ? (
           <Image
@@ -30,10 +32,9 @@ export function ProjectCard({ project }: { project: WorkItem }) {
         )}
       </div>
       <div className="card-body">
-        <div className="card-meta">
-          <h3 className="card-title">{name}</h3>
-          <span className={badgeClass}>{platform}</span>
-        </div>
+        <h3 className="card-title">{name}</h3>
+        <span className={badgeClass}>{platform}</span>
+        <span className="card-domain">{domain}</span>
         <span className="card-visit">
           Visit site
           <span className="visually-hidden"> (opens in a new tab)</span>
