@@ -1,0 +1,237 @@
+{
+  "generatedAt": "2026-09-19T13:16:22.796Z",
+  "captured": [
+    "az-pain-medical-clinic",
+    "bens-paint-supply",
+    "c2-vehicles",
+    "clements-pools",
+    "computek",
+    "cosello-construction",
+    "dalysmooth",
+    "dimitri-daleno",
+    "disability-advice",
+    "enroll-here",
+    "exact-exteriors",
+    "hirehawk",
+    "leonard-splaine",
+    "lubar",
+    "majestic-tree-service",
+    "mirada-firenze",
+    "mydose-ai",
+    "outsourced-co",
+    "outsourced-ph",
+    "pilbara-minerals",
+    "pinkys-softwash",
+    "sg-credit-partners",
+    "silver-ridge",
+    "space-coast-cooling",
+    "ultimate-image-spa",
+    "upper-aeon",
+    "willow-haven-candles"
+  ],
+  "failed": [],
+  "mobileFailed": [],
+  "results": [
+    {
+      "slug": "az-pain-medical-clinic",
+      "name": "AZ Pain Medical Clinic LLC",
+      "url": "https://azpainmed.com/",
+      "desktop": "ok",
+      "mobile": "ok"
+    },
+    {
+      "slug": "bens-paint-supply",
+      "name": "Ben's Paint Supply",
+      "url": "https://www.benspaintsupply.com/",
+      "desktop": "ok",
+      "mobile": "ok"
+    },
+    {
+      "slug": "c2-vehicles",
+      "name": "C2 Vehicles",
+      "url": "https://c2vehicles.com/",
+      "desktop": "ok",
+      "mobile": "ok"
+    },
+    {
+      "slug": "clements-pools",
+      "name": "Clements Pools",
+      "url": "https://clementspools.com/",
+      "desktop": "ok",
+      "desktopEngine": "chromium",
+      "mobile": "ok",
+      "mobileEngine": "chromium"
+    },
+    {
+      "slug": "computek",
+      "name": "Computek",
+      "url": "https://computek-six.vercel.app/",
+      "desktop": "ok",
+      "mobile": "ok"
+    },
+    {
+      "slug": "cosello-construction",
+      "name": "Cosello Construction",
+      "url": "https://www.coselloconstruction.pro/",
+      "desktop": "ok",
+      "mobile": "ok"
+    },
+    {
+      "slug": "dalysmooth",
+      "name": "Dalysmooth",
+      "url": "https://dalysmooth.com/",
+      "desktop": "ok",
+      "mobile": "ok"
+    },
+    {
+      "slug": "dimitri-daleno",
+      "name": "Dimitri Daleno",
+      "url": "https://dimitridaleno.com/",
+      "desktop": "ok",
+      "desktopEngine": "chromium",
+      "mobile": "ok",
+      "mobileEngine": "chromium"
+    },
+    {
+      "slug": "disability-advice",
+      "name": "Disability Advice",
+      "url": "https://disabilityadvice.org/",
+      "desktop": "ok",
+      "mobile": "ok"
+    },
+    {
+      "slug": "enroll-here",
+      "name": "Enroll Here",
+      "url": "https://enrollhere.com/",
+      "desktop": "ok",
+      "mobile": "ok"
+    },
+    {
+      "slug": "exact-exteriors",
+      "name": "Exact Exteriors",
+      "url": "https://exactexteriorsllc.com/",
+      "desktop": "ok",
+      "mobile": "ok"
+    },
+    {
+      "slug": "hirehawk",
+      "name": "HireHawk",
+      "url": "https://hirehawk.com/",
+      "desktop": "ok",
+      "mobile": "ok"
+    },
+    {
+      "slug": "leonard-splaine",
+      "name": "Leonard Splaine",
+      "url": "https://www.leonardsplaine.com/",
+      "desktop": "ok",
+      "mobile": "ok"
+    },
+    {
+      "slug": "lubar",
+      "name": "LùBar",
+      "url": "https://www.lubar.it/",
+      "desktop": "ok",
+      "mobile": "ok"
+    },
+    {
+      "slug": "majestic-tree-service",
+      "name": "Majestic Tree Service",
+      "url": "https://www.majestictreeservice.com/",
+      "desktop": "ok",
+      "mobile": "ok"
+    },
+    {
+      "slug": "mirada-firenze",
+      "name": "Mirada Firenze",
+      "url": "https://miradafirenze.it/",
+      "desktop": "ok",
+      "mobile": "ok"
+    },
+    {
+      "slug": "mydose-ai",
+      "name": "Mydose Ai",
+      "url": "https://mydose.ai/",
+      "desktop": "ok",
+      "desktopEngine": "chromium",
+      "mobile": "ok",
+      "mobileEngine": "chromium"
+    },
+    {
+      "slug": "outsourced-co",
+      "name": "Outsourced CO (Global)",
+      "url": "https://outsourced.co/",
+      "desktop": "ok",
+      "mobile": "ok"
+    },
+    {
+      "slug": "outsourced-ph",
+      "name": "Outsourced PH",
+      "url": "https://outsourced.ph/",
+      "desktop": "ok",
+      "mobile": "ok"
+    },
+    {
+      "slug": "pilbara-minerals",
+      "name": "Pilbara Minerals",
+      "url": "https://pls.com/",
+      "desktop": "ok",
+      "desktopEngine": "chromium",
+      "mobile": "ok",
+      "mobileEngine": "chromium"
+    },
+    {
+      "slug": "pinkys-softwash",
+      "name": "Pinky's Softwash",
+      "url": "https://pinkyssoftwash.com/",
+      "desktop": "ok",
+      "mobile": "ok"
+    },
+    {
+      "slug": "sg-credit-partners",
+      "name": "SG Credit Partners",
+      "url": "https://www.sgcreditpartners.com/",
+      "desktop": "ok",
+      "mobile": "ok"
+    },
+    {
+      "slug": "silver-ridge",
+      "name": "Silver Ridge",
+      "url": "https://www.srdb.ca/",
+      "desktop": "ok",
+      "desktopEngine": "chromium",
+      "mobile": "ok",
+      "mobileEngine": "chromium"
+    },
+    {
+      "slug": "space-coast-cooling",
+      "name": "Space Coast Cooling",
+      "url": "https://www.spacecoastcooling.com/",
+      "desktop": "ok",
+      "mobile": "ok"
+    },
+    {
+      "slug": "ultimate-image-spa",
+      "name": "Ultimate Image Spa",
+      "url": "https://ultimateimagemedspa.com/",
+      "desktop": "ok",
+      "mobile": "ok"
+    },
+    {
+      "slug": "upper-aeon",
+      "name": "Upper Aeon",
+      "url": "https://www.upperaeon.com/",
+      "desktop": "ok",
+      "mobile": "ok"
+    },
+    {
+      "slug": "willow-haven-candles",
+      "name": "Willow Haven Candles",
+      "url": "https://willowhavencandles.com/",
+      "desktop": "ok",
+      "desktopEngine": "chromium",
+      "mobile": "ok",
+      "mobileEngine": "chromium"
+    }
+  ]
+}

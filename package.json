@@ -1,12 +1,14 @@
 {
-  "name": "my-portfolio",
+  "name": "portfolio",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "screenshots": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/screenshots.mjs",
+    "screenshots:install": "playwright install chromium"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
@@ -21,6 +23,8 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.4",
+    "playwright": "^1.63.0",
+    "sharp": "^0.35.4",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { projects } from "@/data/projects";
+import { getSiteUrl, site } from "@/data/site";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -12,8 +14,32 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata = {
-  title: "Jay's Portfolio",
+const description = `${site.intro} ${projects.length} live client sites, filterable by platform.`;
+
+export const metadata: Metadata = {
+  metadataBase: new URL(getSiteUrl()),
+  title: site.title,
+  description,
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "/",
+    siteName: site.name,
+    title: site.title,
+    description,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: site.title,
+    description,
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
   icons: {
     icon: "/yrnr.png",
   },
