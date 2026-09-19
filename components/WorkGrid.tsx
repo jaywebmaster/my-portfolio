@@ -50,8 +50,15 @@ export function WorkGrid({ projects }: { projects: WorkItem[] }) {
     };
     place();
 
+    // Centre the active tab within the bar only; scrollIntoView would also
+    // scroll the document, which jumped the page on first load.
     const active = bar.querySelector<HTMLElement>(".filter-tab.is-active");
-    active?.scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" });
+    if (active && bar.scrollWidth > bar.clientWidth) {
+      bar.scrollTo({
+        left: active.offsetLeft - (bar.clientWidth - active.offsetWidth) / 2,
+        behavior: "smooth",
+      });
+    }
 
     const observer = new ResizeObserver(place);
     observer.observe(bar);
