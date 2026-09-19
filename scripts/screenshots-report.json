@@ -1,12 +1,14 @@
 {
-  "generatedAt": "2026-09-19T13:16:22.796Z",
+  "generatedAt": "2026-09-19T14:16:22.685Z",
   "captured": [
+    "aarons-leak-detection",
     "az-pain-medical-clinic",
     "bens-paint-supply",
     "c2-vehicles",
     "clements-pools",
     "computek",
     "cosello-construction",
+    "cville-gutter-pros",
     "dalysmooth",
     "dimitri-daleno",
     "disability-advice",
@@ -20,6 +22,7 @@
     "mydose-ai",
     "outsourced-co",
     "outsourced-ph",
+    "phlash-consulting",
     "pilbara-minerals",
     "pinkys-softwash",
     "sg-credit-partners",
@@ -32,6 +35,15 @@
   "failed": [],
   "mobileFailed": [],
   "results": [
+    {
+      "slug": "aarons-leak-detection",
+      "name": "Aaron's Leak Detection",
+      "url": "https://www.aaronsleakdetection.com/",
+      "desktop": "ok",
+      "desktopEngine": "chromium",
+      "mobile": "ok",
+      "mobileEngine": "chromium"
+    },
     {
       "slug": "az-pain-medical-clinic",
       "name": "AZ Pain Medical Clinic LLC",
@@ -75,6 +87,15 @@
       "url": "https://www.coselloconstruction.pro/",
       "desktop": "ok",
       "mobile": "ok"
+    },
+    {
+      "slug": "cville-gutter-pros",
+      "name": "Cville Gutter Pros",
+      "url": "https://cvillegutterpros.com/",
+      "desktop": "ok",
+      "desktopEngine": "chromium",
+      "mobile": "ok",
+      "mobileEngine": "chromium"
     },
     {
       "slug": "dalysmooth",
@@ -170,6 +191,15 @@
       "url": "https://outsourced.ph/",
       "desktop": "ok",
       "mobile": "ok"
+    },
+    {
+      "slug": "phlash-consulting",
+      "name": "Phlash Consulting",
+      "url": "https://phlashconsulting.com/",
+      "desktop": "ok",
+      "desktopEngine": "chromium",
+      "mobile": "ok",
+      "mobileEngine": "chromium"
     },
     {
       "slug": "pilbara-minerals",

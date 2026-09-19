@@ -58,6 +58,8 @@ export const projects: Project[] = [
   project("WordPress", "ultimate-image-spa", "Ultimate Image Spa", "https://ultimateimagemedspa.com/"),
   project("WordPress", "mydose-ai", "Mydose Ai", "https://mydose.ai/"),
   project("WordPress", "disability-advice", "Disability Advice", "https://disabilityadvice.org/"),
+  project("WordPress", "phlash-consulting", "Phlash Consulting", "https://phlashconsulting.com/"),
+  project("WordPress", "cville-gutter-pros", "Cville Gutter Pros", "https://cvillegutterpros.com/"),
 
   // Next.js
   project("Next.js", "computek", "Computek", "https://computek-six.vercel.app/"),
@@ -66,6 +68,7 @@ export const projects: Project[] = [
 
   // Webflow
   project("Webflow", "enroll-here", "Enroll Here", "https://enrollhere.com/"),
+  project("Webflow", "aarons-leak-detection", "Aaron's Leak Detection", "https://www.aaronsleakdetection.com/"),
 ];
 
 /** Number of projects per platform, derived from the list above. */
