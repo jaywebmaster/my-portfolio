@@ -29,7 +29,7 @@ export function ResumeSection() {
               eyebrow="Resume"
               titleId="resume-title"
               title="My resume, on one page."
-              intro="The short version of my experience and skills. The PDF is a plain, single-column layout that reads cleanly in applicant tracking systems."
+              intro="The short version of my experience and skills. The full PDF adds personal projects and a few headline numbers, in a single-column layout that reads cleanly in applicant tracking systems."
             />
           </Reveal>
           <Reveal delay={80}>
