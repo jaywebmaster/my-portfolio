@@ -1,0 +1,11 @@
+# Vercel builds from source with its own environment variables.
+# Never upload local secrets, local build output or tooling state.
+# (.env.production stays: it only holds the public canonical URL.)
+.env.local
+.env.*.local
+.env.development*
+.next
+node_modules
+.git
+.vercel
+.claude

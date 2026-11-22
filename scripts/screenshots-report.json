@@ -1,12 +1,15 @@
 {
-  "generatedAt": "2026-09-19T14:16:22.685Z",
+  "generatedAt": "2026-11-22T10:42:06.102Z",
   "captured": [
     "aarons-leak-detection",
+    "atlantic-ae",
     "az-pain-medical-clinic",
     "bens-paint-supply",
     "c2-vehicles",
+    "cherie-inn",
     "clements-pools",
     "computek",
+    "cooper-pg",
     "cosello-construction",
     "cville-gutter-pros",
     "dalysmooth",
@@ -16,10 +19,12 @@
     "exact-exteriors",
     "hirehawk",
     "leonard-splaine",
+    "love-inc-cv",
     "lubar",
     "majestic-tree-service",
     "mirada-firenze",
     "mydose-ai",
+    "next-step-wm",
     "outsourced-co",
     "outsourced-ph",
     "phlash-consulting",
@@ -39,6 +44,15 @@
       "slug": "aarons-leak-detection",
       "name": "Aaron's Leak Detection",
       "url": "https://www.aaronsleakdetection.com/",
+      "desktop": "ok",
+      "desktopEngine": "chromium",
+      "mobile": "ok",
+      "mobileEngine": "chromium"
+    },
+    {
+      "slug": "atlantic-ae",
+      "name": "Atlantic AE",
+      "url": "https://atlantic-ae.com/",
       "desktop": "ok",
       "desktopEngine": "chromium",
       "mobile": "ok",
@@ -66,6 +80,15 @@
       "mobile": "ok"
     },
     {
+      "slug": "cherie-inn",
+      "name": "Cherie Inn",
+      "url": "https://cherieinn.com/",
+      "desktop": "ok",
+      "desktopEngine": "chromium",
+      "mobile": "ok",
+      "mobileEngine": "chromium"
+    },
+    {
       "slug": "clements-pools",
       "name": "Clements Pools",
       "url": "https://clementspools.com/",
@@ -80,6 +103,15 @@
       "url": "https://computek-six.vercel.app/",
       "desktop": "ok",
       "mobile": "ok"
+    },
+    {
+      "slug": "cooper-pg",
+      "name": "Cooper People Group",
+      "url": "https://cooperpg.com/",
+      "desktop": "ok",
+      "desktopEngine": "chromium",
+      "mobile": "ok",
+      "mobileEngine": "chromium"
     },
     {
       "slug": "cosello-construction",
@@ -149,6 +181,15 @@
       "mobile": "ok"
     },
     {
+      "slug": "love-inc-cv",
+      "name": "Love INC Cedar Valley",
+      "url": "https://loveinccv.org/",
+      "desktop": "ok",
+      "desktopEngine": "chromium",
+      "mobile": "ok",
+      "mobileEngine": "chromium"
+    },
+    {
       "slug": "lubar",
       "name": "LùBar",
       "url": "https://www.lubar.it/",
@@ -173,6 +214,15 @@
       "slug": "mydose-ai",
       "name": "Mydose Ai",
       "url": "https://mydose.ai/",
+      "desktop": "ok",
+      "desktopEngine": "chromium",
+      "mobile": "ok",
+      "mobileEngine": "chromium"
+    },
+    {
+      "slug": "next-step-wm",
+      "name": "Next Step West Michigan",
+      "url": "https://nextstep-wm.org/",
       "desktop": "ok",
       "desktopEngine": "chromium",
       "mobile": "ok",
