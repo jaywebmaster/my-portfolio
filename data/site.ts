@@ -1,10 +1,10 @@
-/** Site-wide copy and identity. Change the agency name here, once. */
+/** Site-wide identity used by metadata, Open Graph and structured data. */
 export const site = {
-  name: "Portfolio",
-  title: "Portfolio — Web Development Work",
-  tagline: "Websites built to perform.",
+  name: "Jayvan Dorig",
+  title: "Jayvan Dorig | WordPress Developer & Web Developer",
+  tagline: "Building modern, high-performing websites for businesses.",
   intro:
-    "We design and build websites on WordPress, Shopify, Webflow and Next.js for e-commerce brands, service businesses and clinics, and connect them to GoHighLevel CRM.",
+    "Jayvan Dorig is an experienced WordPress and Web Developer specializing in modern, responsive, and high-performing websites for businesses worldwide.",
 };
 
 /**
