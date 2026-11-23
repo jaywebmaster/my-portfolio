@@ -4,7 +4,7 @@
  */
 export const profile = {
   name: "Jayvan Dorig",
-  titles: ["WordPress Developer", "Web Developer", "Front-End Developer"],
+  titles: ["WordPress Developer", "Web Developer", "Full-Stack Developer"],
   email: "jayvan.webmaster@gmail.com",
   phone: {
     /** International format so clients outside the Philippines can dial it. */
