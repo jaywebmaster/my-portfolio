@@ -6,7 +6,7 @@ import { education } from "@/data/resume";
 
 const focusAreas = [
   { title: "WordPress Development", detail: "Builds, themes and plugins" },
-  { title: "Front-End Development", detail: "HTML, CSS, JavaScript, React" },
+  { title: "Full-Stack Development", detail: "React, Next.js, PHP and APIs" },
   { title: "Design Implementation", detail: "Mockups to pixel-perfect pages" },
   { title: "Responsive Development", detail: "Desktop, tablet and mobile" },
   { title: "Website Optimization", detail: "Speed, Core Web Vitals, SEO" },

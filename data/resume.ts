@@ -10,7 +10,7 @@
  */
 
 export const summary =
-  "WordPress and front-end developer with 4+ years of turning designs into fast, search-friendly websites built to bring in leads. Builds custom themes and plugins, connects the CRM, booking and analytics tools behind them, and keeps sites quick and secure long after launch. Most recently rebuilt HireHawk's website from Webflow into a custom WordPress platform with 100+ SEO landing pages and an AI-ready toolkit plugin. Comfortable across WordPress, Shopify, Webflow, Squarespace, React and Next.js.";
+  "WordPress and full-stack developer with 4+ years of turning designs into fast, search-friendly websites built to bring in leads. Builds custom themes and plugins, connects the CRM, booking and analytics tools behind them, and keeps sites quick and secure long after launch. Most recently rebuilt HireHawk's website from Webflow into a custom WordPress platform with 100+ SEO landing pages and an AI-ready toolkit plugin. Comfortable across WordPress, Shopify, Webflow, Squarespace, React and Next.js.";
 
 /** Headline numbers for the top of the resume. Each one is backed by the work below. */
 export const keyFacts: { value: string; label: string }[] = [

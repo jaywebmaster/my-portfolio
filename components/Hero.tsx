@@ -105,7 +105,7 @@ export function Hero() {
             className="mt-6 max-w-[36rem] animate-rise text-[1.0625rem] leading-relaxed text-mute"
             style={delay(240)}
           >
-            I’m a WordPress and front-end developer with {profile.yearsExperience} years of
+            I’m a WordPress and full-stack developer with {profile.yearsExperience} years of
             experience building, customizing and maintaining websites for agencies and direct
             clients, on WordPress and Elementor, WooCommerce, Shopify, Webflow and Next.js.
             Pixel-perfect, fast, and built to work on every screen.
@@ -186,7 +186,7 @@ export function Hero() {
                 <p className="font-display text-[1.0625rem] font-semibold tracking-tight">
                   {profile.name}
                 </p>
-                <p className="label-mono mt-1 text-mute">WordPress · Web · Front-End</p>
+                <p className="label-mono mt-1 text-mute">WordPress · Web · Full-Stack</p>
               </div>
               <p className="label-mono text-right leading-relaxed text-mute">
                 PH
